@@ -1,10 +1,9 @@
-const APP_NAME = "Schooli";
+const APP_NAME = "School Name";
 document.querySelectorAll(".app-name").forEach(el => {
     el.textContent = APP_NAME;
 });
 
 /* Dropdown Script */
-
 const profileBtn = document.getElementById('profileBtn');
 const profileMenu = document.getElementById('profileMenu');
 
@@ -34,7 +33,6 @@ menus.forEach(m => {
 /* =======================
    CHART HELPERS
 ======================= */
-
 function createChart(id, config) {
     const el = document.getElementById(id);
     if (!el) return; // 💡 prevents crash on other dashboards
