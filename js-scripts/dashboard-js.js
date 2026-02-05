@@ -1,7 +1,4 @@
-// CONFIG
-const APP_NAME = "Schooli";
-
-// Inject app name safely
+const APP_NAME = "School Name";
 document.querySelectorAll(".app-name").forEach(el => {
   el.textContent = APP_NAME;
 });
