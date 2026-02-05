@@ -29,9 +29,10 @@
 <body>
     <div class="flex">
 
-        <!-- SIDEBAR -->
-        <aside class="w-64 bg-white min-h-screen px-6 py-6">
-            <nav class="fixed space-y-2 text-sm">
+        <!-- ========================= SIDEBAR ========================= -->
+        <aside class="w-64 bg-white min-h-screen px-6 py-6 md:relative">
+
+            <nav class="space-y-2 text-sm">
                 <h2 class="text-purple-600 font-bold text-xl flex items-center gap-2 mb-8">
                     <i class="bi bi-mortarboard"></i>
                     <span class="app-name"></span>
@@ -41,26 +42,32 @@
                     class="menu active flex items-center gap-3 px-4 py-3 rounded-xl bg-purple-100 text-purple-600 font-semibold cursor-pointer">
                     <i class="bi bi-grid-fill"></i> Dashboard
                 </a>
+
                 <a data-target="attendance"
                     class="menu flex items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-100 cursor-pointer">
                     <i class="bi bi-calendar-check"></i> Attendance
                 </a>
+
                 <a data-target="subjects"
                     class="menu flex items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-100 cursor-pointer">
                     <i class="bi bi-book"></i> Subjects
                 </a>
+
                 <a data-target="assignments"
                     class="menu flex items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-100 cursor-pointer">
                     <i class="bi bi-journal-text"></i> Assignments
                 </a>
+
                 <a data-target="exams"
                     class="menu flex items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-100 cursor-pointer">
                     <i class="bi bi-award"></i> Exams & Results
                 </a>
+
                 <a data-target="timetable"
                     class="menu flex items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-100 cursor-pointer">
                     <i class="bi bi-clock"></i> Timetable
                 </a>
+
                 <a data-target="profile"
                     class="menu flex items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-100 cursor-pointer">
                     <i class="bi bi-person"></i> Profile
@@ -68,37 +75,52 @@
             </nav>
         </aside>
 
-        <!-- MAIN -->
-        <main class="flex-1 p-8">
+        <!-- ========================= MAIN CONTENT ========================= -->
+        <main class="flex-1 p-4 md:p-8">
 
             <!-- TOP BAR -->
             <div class="flex justify-between items-center mb-6 relative">
 
-                <!-- Search -->
-                <input
-                    class="w-1/2 px-5 py-3 rounded-full bg-white shadow-sm outline-none focus:ring-2 focus:ring-indigo-500"
-                    placeholder="Search anything here">
+                <!-- LEFT: DESKTOP SEARCH -->
+                <div class="hidden md:block w-1/2">
+                    <input
+                        class="w-full px-5 py-3 rounded-full bg-white shadow-sm outline-none focus:ring-2 focus:ring-indigo-500"
+                        placeholder="Search anything here">
+                </div>
 
                 <!-- Right Icons -->
                 <div class="flex items-center gap-6">
 
-                    <!-- Notification -->
+                    <!-- SIDEBAR BUTTON (MOBILE) -->
+                    <button id="mobileSidebarBtn"
+                        class="md:hidden bg-white shadow-sm p-2.5 rounded-full flex items-center justify-center">
+                        <i class="bi bi-list text-lg"></i>
+                    </button>
+
+                    <!-- SEARCH ICON (MOBILE) -->
+                    <button id="searchIcon"
+                        class="md:hidden bg-white shadow-sm p-2.5 rounded-full flex items-center justify-center">
+                        <i class="bi bi-search text-lg"></i>
+                    </button>
+
+                    <!-- NOTIFICATION (OPTIONAL: YOU CAN KEEP IT HERE) -->
                     <div class="relative cursor-pointer">
                         <i class="bi bi-bell text-xl"></i>
                         <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full"></span>
                     </div>
 
-                    <!-- Profile Dropdown -->
+                    <!-- PROFILE -->
                     <div class="relative">
                         <button id="profileBtn" class="flex items-center gap-2 focus:outline-none">
                             <img src="https://i.pravatar.cc/100" class="rounded-full w-9 h-9">
-                            <span class="font-medium">Aditya</span>
+                            <span class="font-medium hidden sm:inline">Aditya</span>
                             <i class="bi bi-chevron-down text-sm"></i>
                         </button>
 
-                        <!-- Dropdown Menu -->
+                        <!-- Dropdown -->
                         <div id="profileMenu"
                             class="hidden absolute right-0 mt-3 w-52 bg-white rounded-xl shadow-lg border z-50">
+
                             <div class="px-4 py-3 border-b">
                                 <p class="font-semibold text-gray-800">Aditya</p>
                                 <p class="text-sm text-gray-500">Student</p>
@@ -106,9 +128,11 @@
 
                             <ul class="py-2 text-sm">
                                 <li>
-                                    <a href="#" class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
+                                    <a href="javascript:void(0)" id="myProfileLink"
+                                        class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
                                         <i class="bi bi-person"></i> My Profile
                                     </a>
+
                                 </li>
                                 <li>
                                     <a href="#" class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
@@ -118,11 +142,6 @@
                                 <li>
                                     <a href="#" class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
                                         <i class="bi bi-shield-lock"></i> Change Password
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
-                                        <i class="bi bi-life-preserver"></i> Help & Support
                                     </a>
                                 </li>
                             </ul>
@@ -137,37 +156,46 @@
 
                 </div>
             </div>
+            <div id="mobileSearch" class="hidden md:hidden mb-4">
+                <input
+                    class="w-full px-5 py-3 rounded-full bg-white shadow-sm outline-none focus:ring-2 focus:ring-indigo-500"
+                    placeholder="Search anything here">
+            </div>
 
-            <!-- DASHBOARD -->
-            <section id="dashboard" class="section active">
+            <!-- ========================= DASHBOARD SECTION ========================= -->
+            <section id="dashboard" class="section p-6 space-y-6 active">
 
                 <h2 class="text-xl font-semibold">Welcome back, Luke 👋</h2>
                 <p class="text-gray-500 mb-6">Here’s your academic overview.</p>
 
-                <!-- STATS -->
-                <div class="grid grid-cols-4 gap-6 mb-6">
+                <!-- STATS CARDS -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+
                     <div class="bg-green-50 p-6 rounded-2xl">
                         <p class="text-sm text-gray-500">Attendance</p>
                         <h3 class="text-2xl font-bold">92%</h3>
                     </div>
+
                     <div class="bg-blue-50 p-6 rounded-2xl">
                         <p class="text-sm text-gray-500">Subjects</p>
                         <h3 class="text-2xl font-bold">6</h3>
                     </div>
+
                     <div class="bg-yellow-50 p-6 rounded-2xl">
                         <p class="text-sm text-gray-500">Pending Assignments</p>
                         <h3 class="text-2xl font-bold">3</h3>
                     </div>
+
                     <div class="bg-purple-50 p-6 rounded-2xl">
                         <p class="text-sm text-gray-500">Average Score</p>
                         <h3 class="text-2xl font-bold">78%</h3>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-12 gap-6">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-                    <!-- LEFT -->
-                    <div class="col-span-7 space-y-6">
+                    <!-- LEFT SIDE -->
+                    <div class="lg:col-span-7 space-y-6">
 
                         <div class="bg-white p-6 rounded-2xl">
                             <h3 class="font-semibold mb-4">Upcoming Assignments</h3>
@@ -189,11 +217,10 @@
                             <p class="text-sm">📢 Unit Test from next Monday</p>
                             <p class="text-sm">🎉 Annual Day Registration Open</p>
                         </div>
-
                     </div>
 
-                    <!-- RIGHT -->
-                    <div class="col-span-5 space-y-6">
+                    <!-- RIGHT SIDE -->
+                    <div class="lg:col-span-5 space-y-6">
 
                         <div class="bg-white p-6 rounded-2xl text-center">
                             <h3 class="font-semibold mb-2">Attendance Overview</h3>
@@ -212,39 +239,39 @@
                                 <li>💻 Computer</li>
                             </ul>
                         </div>
-
                     </div>
                 </div>
             </section>
 
+            <!-- EMPTY SECTIONS (WILL LOAD LATER) -->
             <!-- ================= ATTENDANCE SECTION ================= -->
-            <section id="attendance" class="section p-6 space-y-6">
+            <section id="attendance" class="section p-4 sm:p-6 space-y-6">
 
                 <!-- Attendance Summary -->
-                <div class="grid grid-cols-4 gap-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                     <div class="bg-green-50 p-5 rounded-2xl">
                         <p class="text-sm text-gray-500">Overall Attendance</p>
-                        <h3 class="text-2xl font-bold">92%</h3>
+                        <h3 class="text-xl sm:text-2xl font-bold">92%</h3>
                     </div>
                     <div class="bg-blue-50 p-5 rounded-2xl">
                         <p class="text-sm text-gray-500">Present Days</p>
-                        <h3 class="text-2xl font-bold">138</h3>
+                        <h3 class="text-xl sm:text-2xl font-bold">138</h3>
                     </div>
                     <div class="bg-red-50 p-5 rounded-2xl">
                         <p class="text-sm text-gray-500">Absent Days</p>
-                        <h3 class="text-2xl font-bold">12</h3>
+                        <h3 class="text-xl sm:text-2xl font-bold">12</h3>
                     </div>
                     <div class="bg-yellow-50 p-5 rounded-2xl">
                         <p class="text-sm text-gray-500">Late Entries</p>
-                        <h3 class="text-2xl font-bold">5</h3>
+                        <h3 class="text-xl sm:text-2xl font-bold">5</h3>
                     </div>
                 </div>
 
                 <!-- Chart + Monthly Stats -->
-                <div class="grid grid-cols-12 gap-6">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
                     <!-- Attendance Chart -->
-                    <div class="col-span-5 bg-white rounded-2xl p-6 text-center">
+                    <div class="lg:col-span-5 bg-white rounded-2xl p-5 sm:p-6 text-center">
                         <h3 class="font-semibold mb-3">Attendance Overview</h3>
                         <div class="relative w-full h-48">
                             <canvas id="attendanceDonut"></canvas>
@@ -253,9 +280,9 @@
                     </div>
 
                     <!-- Monthly Breakdown -->
-                    <div class="col-span-7 bg-white rounded-2xl p-6">
+                    <div class="lg:col-span-7 bg-white rounded-2xl p-5 sm:p-6">
                         <h3 class="font-semibold mb-4">Monthly Attendance (Demo)</h3>
-                        <div class="grid grid-cols-3 gap-4 text-sm">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm">
                             <div class="p-4 rounded-xl bg-gray-50">
                                 <p class="text-gray-500">January</p>
                                 <p class="font-semibold">94%</p>
@@ -270,13 +297,11 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
 
                 <!-- Recent Attendance Records -->
-                <div class="bg-white rounded-2xl p-6">
+                <div class="bg-white rounded-2xl p-5 sm:p-6 overflow-x-auto">
                     <h3 class="font-semibold mb-4">Recent Attendance</h3>
-
                     <table class="w-full text-sm">
                         <thead class="text-gray-500 border-b">
                             <tr>
@@ -310,7 +335,8 @@
                 </div>
 
                 <!-- Extra Features -->
-                <div class="bg-white rounded-2xl p-6 flex items-center justify-between">
+                <div
+                    class="bg-white rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div>
                         <h3 class="font-semibold">Download Attendance Report</h3>
                         <p class="text-sm text-gray-500">PDF for parent & student reference</p>
@@ -323,33 +349,33 @@
             </section>
 
             <!-- ================= SUBJECTS SECTION ================= -->
-            <section id="subjects" class="section p-6 space-y-6">
+            <section id="subjects" class="section p-4 sm:p-6 space-y-6">
 
                 <!-- Subjects Overview -->
-                <div class="grid grid-cols-4 gap-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                     <div class="bg-purple-50 p-5 rounded-2xl">
                         <p class="text-sm text-gray-500">Total Subjects</p>
-                        <h3 class="text-2xl font-bold">6</h3>
+                        <h3 class="text-xl sm:text-2xl font-bold">6</h3>
                     </div>
                     <div class="bg-green-50 p-5 rounded-2xl">
                         <p class="text-sm text-gray-500">Completed Topics</p>
-                        <h3 class="text-2xl font-bold">42</h3>
+                        <h3 class="text-xl sm:text-2xl font-bold">42</h3>
                     </div>
                     <div class="bg-yellow-50 p-5 rounded-2xl">
                         <p class="text-sm text-gray-500">Pending Topics</p>
-                        <h3 class="text-2xl font-bold">8</h3>
+                        <h3 class="text-xl sm:text-2xl font-bold">8</h3>
                     </div>
                     <div class="bg-blue-50 p-5 rounded-2xl">
                         <p class="text-sm text-gray-500">Avg Performance</p>
-                        <h3 class="text-2xl font-bold">78%</h3>
+                        <h3 class="text-xl sm:text-2xl font-bold">78%</h3>
                     </div>
                 </div>
 
                 <!-- Subject Cards -->
-                <div class="grid grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
                     <!-- Mathematics -->
-                    <div class="bg-white rounded-2xl p-6 space-y-4">
+                    <div class="bg-white rounded-2xl p-5 sm:p-6 space-y-4">
                         <div class="flex justify-between items-center">
                             <h3 class="font-semibold text-lg">📐 Mathematics</h3>
                             <span class="text-sm text-gray-500">Mr. R Sharma</span>
@@ -380,7 +406,7 @@
                     </div>
 
                     <!-- English -->
-                    <div class="bg-white rounded-2xl p-6 space-y-4">
+                    <div class="bg-white rounded-2xl p-5 sm:p-6 space-y-4">
                         <div class="flex justify-between items-center">
                             <h3 class="font-semibold text-lg">📘 English</h3>
                             <span class="text-sm text-gray-500">Ms. A Thomas</span>
@@ -411,7 +437,7 @@
                     </div>
 
                     <!-- Science -->
-                    <div class="bg-white rounded-2xl p-6 space-y-4">
+                    <div class="bg-white rounded-2xl p-5 sm:p-6 space-y-4">
                         <div class="flex justify-between items-center">
                             <h3 class="font-semibold text-lg">🔬 Science</h3>
                             <span class="text-sm text-gray-500">Dr. K Iyer</span>
@@ -440,11 +466,11 @@
                             </button>
                         </div>
                     </div>
-
                 </div>
 
                 <!-- Extra Features -->
-                <div class="bg-white rounded-2xl p-6 flex items-center justify-between">
+                <div
+                    class="bg-white rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div>
                         <h3 class="font-semibold">Download Subject Syllabus</h3>
                         <p class="text-sm text-gray-500">PDF syllabus for all subjects</p>
@@ -455,11 +481,12 @@
                 </div>
 
             </section>
-            <!-- ================= ASSIGNMENTS SECTION ================= -->
-            <section id="assignments" class="section p-6 space-y-6">
 
-                <!-- Header -->
-                <div class="bg-white rounded-2xl p-6 flex justify-between items-center">
+            <!-- ================= ASSIGNMENTS SECTION ================= -->
+            <section id="assignments" class="section p-4 sm:p-6 space-y-6">
+
+                <div
+                    class="bg-white rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                     <div>
                         <h3 class="font-semibold text-lg">Assignments</h3>
                         <p class="text-sm text-gray-500">Track, submit & review your work</p>
@@ -469,8 +496,7 @@
                     </span>
                 </div>
 
-                <!-- Assignment List -->
-                <div class="bg-white rounded-2xl p-6">
+                <div class="bg-white rounded-2xl p-5 sm:p-6 overflow-x-auto">
                     <table class="w-full text-sm">
                         <thead class="text-gray-500 border-b">
                             <tr>
@@ -522,15 +548,14 @@
             </section>
 
             <!-- ================= EXAMS & RESULTS SECTION ================= -->
-            <section id="exams" class="section p-6 space-y-6">
+            <section id="exams" class="section p-4 sm:p-6 space-y-6">
 
-                <div class="bg-white rounded-2xl p-6">
+                <div class="bg-white rounded-2xl p-5 sm:p-6">
                     <h3 class="font-semibold text-lg mb-1">Exams & Results</h3>
                     <p class="text-sm text-gray-500">Your upcoming exams & performance</p>
                 </div>
 
-                <!-- Upcoming Exams -->
-                <div class="bg-white rounded-2xl p-6">
+                <div class="bg-white rounded-2xl p-5 sm:p-6">
                     <h4 class="font-semibold mb-4">Upcoming Exams</h4>
                     <ul class="space-y-2 text-sm">
                         <li>📐 Mathematics — <strong>12 Oct</strong> (10:00 AM)</li>
@@ -539,8 +564,7 @@
                     </ul>
                 </div>
 
-                <!-- Results -->
-                <div class="bg-white rounded-2xl p-6">
+                <div class="bg-white rounded-2xl p-5 sm:p-6 overflow-x-auto">
                     <h4 class="font-semibold mb-4">Recent Results</h4>
                     <table class="w-full text-sm">
                         <thead class="text-gray-500 border-b">
@@ -577,14 +601,14 @@
             </section>
 
             <!-- ================= TIMETABLE SECTION ================= -->
-            <section id="timetable" class="section p-6 space-y-6">
+            <section id="timetable" class="section p-4 sm:p-6 space-y-6">
 
-                <div class="bg-white rounded-2xl p-6">
+                <div class="bg-white rounded-2xl p-5 sm:p-6">
                     <h3 class="font-semibold text-lg">Weekly Timetable</h3>
                     <p class="text-sm text-gray-500">Class 10 • Section A</p>
                 </div>
 
-                <div class="bg-white rounded-2xl p-6 overflow-x-auto">
+                <div class="bg-white rounded-2xl p-5 sm:p-6 overflow-x-auto">
                     <table class="w-full text-sm text-center border-collapse">
                         <thead class="bg-gray-100">
                             <tr>
@@ -624,19 +648,19 @@
             </section>
 
             <!-- ================= STUDENT PROFILE SECTION ================= -->
-            <section id="profile" class="section p-6 space-y-6">
+            <section id="profile" class="section p-4 sm:p-6 space-y-6">
 
-                <div class="bg-white rounded-2xl p-6 flex items-center gap-6">
-                    <img src="https://i.pravatar.cc/100" class="w-24 h-24 rounded-full">
-                    <div>
+                <div class="bg-white rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+                    <img src="https://i.pravatar.cc/100" class="w-20 h-20 sm:w-24 sm:h-24 rounded-full">
+                    <div class="text-center sm:text-left">
                         <h3 class="font-semibold text-xl">Aditya</h3>
                         <p class="text-sm text-gray-500">Class 10 • Section A • Roll No: 23</p>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                    <div class="bg-white rounded-2xl p-6">
+                    <div class="bg-white rounded-2xl p-5 sm:p-6">
                         <h4 class="font-semibold mb-3">Personal Details</h4>
                         <p class="text-sm">📅 Date of Birth: 12 Aug 2008</p>
                         <p class="text-sm">👤 Gender: Male</p>
@@ -644,7 +668,7 @@
                         <p class="text-sm">📧 Email: luke@student.schooli.com</p>
                     </div>
 
-                    <div class="bg-white rounded-2xl p-6">
+                    <div class="bg-white rounded-2xl p-5 sm:p-6">
                         <h4 class="font-semibold mb-3">Parent Details</h4>
                         <p class="text-sm">👨 Father: John R</p>
                         <p class="text-sm">📞 Contact: +91 99887 66554</p>
@@ -653,7 +677,7 @@
 
                 </div>
 
-                <div class="bg-white rounded-2xl p-6 text-right">
+                <div class="bg-white rounded-2xl p-5 sm:p-6 text-right">
                     <button class="bg-purple-600 text-white px-5 py-2 rounded-xl text-sm">
                         Edit Profile
                     </button>
