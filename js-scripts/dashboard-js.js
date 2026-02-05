@@ -1,94 +1,246 @@
+// CONFIG
 const APP_NAME = "Schooli";
+
+// Inject app name safely
 document.querySelectorAll(".app-name").forEach(el => {
-    el.textContent = APP_NAME;
+  el.textContent = APP_NAME;
 });
 
-/* Dropdown Script */
-
-const profileBtn = document.getElementById('profileBtn');
-const profileMenu = document.getElementById('profileMenu');
-
-profileBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    profileMenu.classList.toggle('hidden');
-});
-
-document.addEventListener('click', () => {
-    profileMenu.classList.add('hidden');
-});
-
-/* Sidebar switching */
-const menus = document.querySelectorAll('.menu');
-const sections = document.querySelectorAll('.section');
-
-menus.forEach(m => {
-    m.onclick = () => {
-        menus.forEach(x => x.classList.remove('bg-purple-100', 'text-purple-600', 'font-semibold'));
-        sections.forEach(s => s.classList.remove('active'));
-
-        m.classList.add('bg-purple-100', 'text-purple-600', 'font-semibold');
-        document.getElementById(m.dataset.target).classList.add('active');
-    };
-});
-
-/* =======================
-   CHART HELPERS
-======================= */
-
-function createChart(id, config) {
-    const el = document.getElementById(id);
-    if (!el) return; // 💡 prevents crash on other dashboards
-    new Chart(el, config);
+// UTILITIES
+// Debounce (prevents performance issues on resize)
+function debounce(fn, delay = 100) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), delay);
+  };
 }
 
-/* =======================
-   DASHBOARD CHARTS
-======================= */
+// Safe query helper
+const $ = (sel, scope = document) => scope.querySelector(sel);
+const $$ = (sel, scope = document) => Array.from(scope.querySelectorAll(sel));
 
-// Dashboard 1
-createChart("chart", {
-    type: "doughnut",
-    data: {
-        labels: ["Math", "English", "Chemistry"],
-        datasets: [{ data: [5000, 6000, 4000] }]
-    },
-    options: { cutout: "70%" }
+// PROFILE DROPDOWN
+const profileBtn = $("#profileBtn");
+const profileMenu = $("#profileMenu");
+
+if (profileBtn && profileMenu) {
+  profileBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    profileMenu.classList.toggle("hidden");
+  });
+
+  document.addEventListener("click", () => {
+    profileMenu.classList.add("hidden");
+  });
+}
+
+// MOBILE SIDEBAR TOGGLE (USING YOUR BUTTON)
+const sidebar = document.querySelector("aside");
+const mobileSidebarBtn = document.getElementById("mobileSidebarBtn");
+
+if (mobileSidebarBtn) {
+  mobileSidebarBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    sidebar.classList.toggle("-translate-x-full");
+  });
+}
+
+// Prepare sidebar for mobile
+function setupResponsiveSidebar() {
+  if (window.innerWidth < 768) {
+    sidebar.classList.add(
+      "fixed",
+      "top-0",
+      "left-0",
+      "z-40",
+      "-translate-x-full",
+      "transition-transform",
+      "duration-300"
+    );
+  } else {
+    sidebar.classList.remove("-translate-x-full", "fixed", "z-40");
+  }
+}
+
+window.addEventListener("resize", debounce(setupResponsiveSidebar));
+setupResponsiveSidebar();
+
+// Close sidebar when clicking outside on mobile
+document.addEventListener("click", (e) => {
+  if (
+    window.innerWidth < 768 &&
+    !sidebar.contains(e.target) &&
+    e.target !== mobileSidebarBtn
+  ) {
+    sidebar.classList.add("-translate-x-full");
+  }
 });
 
-// Dashboard 2
+// MOBILE SEARCH TOGGLE (NEW)
+const searchIcon = document.getElementById("searchIcon");
+const mobileSearch = document.getElementById("mobileSearch");
+
+if (searchIcon && mobileSearch) {
+  searchIcon.addEventListener("click", (e) => {
+    e.stopPropagation();
+    mobileSearch.classList.toggle("hidden");
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!mobileSearch.contains(e.target) && e.target !== searchIcon) {
+      mobileSearch.classList.add("hidden");
+    }
+  });
+}
+
+// SECTION SWITCHING (SAFE + SMOOTH)
+const menus = $$(".menu");
+const sections = $$(".section");
+
+menus.forEach((m) => {
+  m.addEventListener("click", () => {
+    // Update active menu
+    menus.forEach((x) =>
+      x.classList.remove("bg-purple-100", "text-purple-600", "font-semibold")
+    );
+    m.classList.add("bg-purple-100", "text-purple-600", "font-semibold");
+
+    // Switch sections safely
+    sections.forEach((s) => s.classList.remove("active"));
+
+    const target = document.getElementById(m.dataset.target);
+    if (target) target.classList.add("active");
+
+    // Auto-close sidebar on mobile after click
+    if (window.innerWidth < 768) {
+      sidebar.classList.add("-translate-x-full");
+    }
+  });
+});
+
+// CHART HELPER (SAFE)
+function createChart(id, config) {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  // Destroy existing chart if exists (prevents memory leaks)
+  if (el._chartInstance) {
+    el._chartInstance.destroy();
+  }
+
+  el._chartInstance = new Chart(el, {
+    ...config,
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      ...config.options,
+    },
+  });
+}
+
+// DASHBOARD CHARTS
+
+// Attendance (Student Dashboard)
 createChart("attendanceChart", {
-    type: "doughnut",
-    data: {
-        labels: ["Present", "Absent"],
-        datasets: [{ data: [92, 8] }]
+  type: "doughnut",
+  data: {
+    labels: ["Present", "Absent"],
+    datasets: [
+      {
+        data: [92, 8],
+        backgroundColor: ["#22c55e", "#ef4444"],
+        borderWidth: 0,
+      },
+    ],
+  },
+  options: {
+    cutout: "70%",
+    plugins: {
+      legend: { position: "bottom" },
     },
-    options: { cutout: "70%" }
+  },
 });
 
+// Extra charts (won’t break if elements don’t exist)
 createChart("attendanceDonut", {
-    type: "doughnut",
-    data: {
-        labels: ["Present", "Absent", "Late"],
-        datasets: [{
-            data: [92, 8, 3],
-            backgroundColor: ["#22c55e", "#ef4444", "#facc15"]
-        }]
-    },
-    options: {
-        plugins: { legend: { position: "bottom" } },
-        cutout: "65%"
-    }
+  type: "doughnut",
+  data: {
+    labels: ["Present", "Absent", "Late"],
+    datasets: [
+      {
+        data: [92, 8, 3],
+        backgroundColor: ["#22c55e", "#ef4444", "#facc15"],
+        borderWidth: 0,
+      },
+    ],
+  },
+  options: {
+    plugins: { legend: { position: "bottom" } },
+    cutout: "65%",
+  },
 });
 
-// Teacher dashboard
 createChart("performanceChart", {
-    type: "doughnut",
-    data: {
-        labels: ["Excellent", "Good", "Needs Improvement"],
-        datasets: [{ data: [45, 35, 20] }]
-    },
-    options: {
-        cutout: "70%",
-        maintainAspectRatio: false
-    }
+  type: "doughnut",
+  data: {
+    labels: ["Excellent", "Good", "Needs Improvement"],
+    datasets: [
+      {
+        data: [45, 35, 20],
+        backgroundColor: ["#22c55e", "#3b82f6", "#f97316"],
+        borderWidth: 0,
+      },
+    ],
+  },
+  options: {
+    cutout: "70%",
+  },
 });
+
+// ACCESSIBILITY + UX IMPROVEMENTS
+
+// Add keyboard support to menu items
+menus.forEach((m) => {
+  m.setAttribute("tabindex", "0");
+  m.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") m.click();
+  });
+});
+
+
+// ======= FIX: LINK DROPDOWN "MY PROFILE" TO PROFILE SECTION =======
+
+const myProfileLink = document.getElementById("myProfileLink");
+
+if (myProfileLink) {
+  myProfileLink.addEventListener("click", () => {
+
+    // 1) Close dropdown
+    profileMenu.classList.add("hidden");
+
+    // 2) Remove active from all sections
+    sections.forEach((s) => s.classList.remove("active"));
+
+    // 3) Show profile section
+    const profileSection = document.getElementById("profile");
+    if (profileSection) profileSection.classList.add("active");
+
+    // 4) Update sidebar active menu (same style as others)
+    menus.forEach((x) =>
+      x.classList.remove("bg-purple-100", "text-purple-600", "font-semibold")
+    );
+
+    const sidebarProfile = document.querySelector('.menu[data-target="profile"]');
+    if (sidebarProfile) {
+      sidebarProfile.classList.add(
+        "bg-purple-100",
+        "text-purple-600",
+        "font-semibold"
+      );
+    }
+
+    // 5) Scroll to top smoothly
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+}

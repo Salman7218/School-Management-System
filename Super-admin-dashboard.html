@@ -15,9 +15,11 @@
             font-family: Inter, system-ui, sans-serif;
             background-color: #e5e7ec;
         }
+
         .section {
             display: none;
         }
+
         .section.active {
             display: block;
         }
@@ -29,9 +31,9 @@
     <div class="flex">
 
         <!-- SIDEBAR -->
-        <aside class="w-64 bg-white min-h-screen px-6 py-6">
+        <aside class="w-64 bg-white min-h-screen px-6 py-6 md:relative">
 
-            <nav id="menu" class="fixed space-y-2 text-sm">
+            <nav class="space-y-2 text-sm">
                 <h2 class="text-purple-600 font-bold text-xl flex items-center gap-2 mb-8">
                     <i class="bi bi-mortarboard"></i>
                     <span class="app-name"></span>
@@ -73,50 +75,66 @@
                     <i class="bi bi-bell-fill"></i> Notice
                 </a>
             </nav>
-
         </aside>
 
         <!-- MAIN -->
-        <main class="flex-1 p-8">
+        <main class="flex-1 p-4 md:p-8">
 
-            <!-- TOP BAR -->
-            <div class="flex justify-between items-center mb-6 relative">
+            <!-- TOP BAR (FIXED ORDER: Sidebar → Search → Profile) -->
+            <div class="flex justify-between items-center mb-6 gap-4">
 
-                <!-- Search -->
-                <input
-                    class="w-1/2 px-5 py-3 rounded-full bg-white shadow-sm outline-none focus:ring-2 focus:ring-indigo-500"
-                    placeholder="Search anything here">
+                <!-- LEFT: DESKTOP SEARCH -->
+                <div class="hidden md:block w-1/2">
+                    <input
+                        class="w-full px-5 py-3 rounded-full bg-white shadow-sm outline-none focus:ring-2 focus:ring-indigo-500"
+                        placeholder="Search anything here">
+                </div>
 
-                <!-- Right Icons -->
-                <div class="flex items-center gap-6">
+                <!-- RIGHT: ICONS (CORRECT ORDER) -->
+                <div class="flex items-center gap-4">
 
-                    <!-- Notification -->
+                    <!-- SIDEBAR BUTTON (MOBILE) -->
+                    <button id="mobileSidebarBtn"
+                        class="md:hidden bg-white shadow-sm p-2.5 rounded-full flex items-center justify-center">
+                        <i class="bi bi-list text-lg"></i>
+                    </button>
+
+                    <!-- SEARCH ICON (MOBILE) -->
+                    <button id="searchIcon"
+                        class="md:hidden bg-white shadow-sm p-2.5 rounded-full flex items-center justify-center">
+                        <i class="bi bi-search text-lg"></i>
+                    </button>
+
+                    <!-- NOTIFICATION (OPTIONAL: YOU CAN KEEP IT HERE) -->
                     <div class="relative cursor-pointer">
                         <i class="bi bi-bell text-xl"></i>
                         <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full"></span>
                     </div>
 
-                    <!-- Profile Dropdown -->
+                    <!-- PROFILE -->
                     <div class="relative">
                         <button id="profileBtn" class="flex items-center gap-2 focus:outline-none">
-                            <img src="https://i.pravatar.cc/40" class="rounded-full w-9 h-9">
-                            <span class="font-medium">Luke J R</span>
+                            <img src="https://i.pravatar.cc/100" class="rounded-full w-9 h-9">
+                            <span class="font-medium hidden sm:inline">Aditya</span>
                             <i class="bi bi-chevron-down text-sm"></i>
                         </button>
 
-                        <!-- Dropdown Menu -->
+                        <!-- Dropdown -->
                         <div id="profileMenu"
                             class="hidden absolute right-0 mt-3 w-52 bg-white rounded-xl shadow-lg border z-50">
+
                             <div class="px-4 py-3 border-b">
-                                <p class="font-semibold text-gray-800">Luke J R</p>
-                                <p class="text-sm text-gray-500">Super Admin</p>
+                                <p class="font-semibold text-gray-800">Aditya</p>
+                                <p class="text-sm text-gray-500">Student</p>
                             </div>
 
                             <ul class="py-2 text-sm">
                                 <li>
-                                    <a href="#" class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
+                                    <a href="javascript:void(0)" id="myProfileLink"
+                                        class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
                                         <i class="bi bi-person"></i> My Profile
                                     </a>
+
                                 </li>
                                 <li>
                                     <a href="#" class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
@@ -126,11 +144,6 @@
                                 <li>
                                     <a href="#" class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
                                         <i class="bi bi-shield-lock"></i> Change Password
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
-                                        <i class="bi bi-life-preserver"></i> Help & Support
                                     </a>
                                 </li>
                             </ul>
@@ -145,48 +158,57 @@
 
                 </div>
             </div>
+            <div id="mobileSearch" class="hidden md:hidden mb-4">
+                <input
+                    class="w-full px-5 py-3 rounded-full bg-white shadow-sm outline-none focus:ring-2 focus:ring-indigo-500"
+                    placeholder="Search anything here">
+            </div>
 
             <!-- ================= DASHBOARD ================= -->
-            <section id="dashboard" class="section active">
+            <section id="dashboard" class="section active p-4 sm:p-6 space-y-6">
 
-                <h2 class="text-xl font-semibold">Welcome.</h2>
-                <p class="text-gray-500 mb-6">Navigate the future of education with <span class="app-name"></span>.</p>
+                <div>
+                    <h2 class="text-xl sm:text-2xl font-semibold">Welcome.</h2>
+                    <p class="text-gray-500">Navigate the future of education with <span class="app-name"></span>.</p>
+                </div>
 
                 <!-- STATS -->
-                <div class="grid grid-cols-3 gap-6 mb-6">
-                    <div class="bg-purple-50 p-6 rounded-2xl flex justify-between">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                    <div class="bg-purple-50 p-5 sm:p-6 rounded-2xl flex justify-between items-center">
                         <div>
                             <p class="text-sm text-gray-500">Students</p>
-                            <h3 class="text-2xl font-bold">15.00K</h3>
+                            <h3 class="text-xl sm:text-2xl font-bold">15.00K</h3>
                         </div>
                         <i class="bi bi-mortarboard text-purple-500 text-3xl"></i>
                     </div>
-                    <div class="bg-blue-50 p-6 rounded-2xl flex justify-between">
+
+                    <div class="bg-blue-50 p-5 sm:p-6 rounded-2xl flex justify-between items-center">
                         <div>
                             <p class="text-sm text-gray-500">Teachers</p>
-                            <h3 class="text-2xl font-bold">200</h3>
+                            <h3 class="text-xl sm:text-2xl font-bold">200</h3>
                         </div>
                         <i class="bi bi-person text-blue-500 text-3xl"></i>
                     </div>
-                    <div class="bg-orange-50 p-6 rounded-2xl flex justify-between">
+
+                    <div class="bg-orange-50 p-5 sm:p-6 rounded-2xl flex justify-between items-center">
                         <div>
                             <p class="text-sm text-gray-500">Awards</p>
-                            <h3 class="text-2xl font-bold">5.6K</h3>
+                            <h3 class="text-xl sm:text-2xl font-bold">5.6K</h3>
                         </div>
                         <i class="bi bi-award text-orange-500 text-3xl"></i>
                     </div>
                 </div>
 
-                <!-- GRID -->
-                <div class="grid grid-cols-12 gap-6">
+                <!-- MAIN GRID -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-                    <!-- LEFT -->
-                    <div class="col-span-7 space-y-6">
+                    <!-- LEFT PANEL -->
+                    <div class="lg:col-span-7 space-y-6">
 
                         <!-- Class Routine -->
-                        <div class="bg-white p-6 rounded-2xl">
+                        <div class="bg-white p-5 sm:p-6 rounded-2xl">
                             <h3 class="font-semibold mb-4">Class Routine</h3>
-                            <div class="grid grid-cols-2 gap-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <p class="font-medium">October, 2023</p>
                                     <button class="mt-2 bg-purple-600 text-white px-4 py-2 rounded-xl text-sm">
@@ -203,7 +225,7 @@
                         </div>
 
                         <!-- Star Students -->
-                        <div class="bg-white p-6 rounded-2xl">
+                        <div class="bg-white p-5 sm:p-6 rounded-2xl overflow-x-auto">
                             <h3 class="font-semibold mb-4">Star Students</h3>
                             <table class="w-full text-sm">
                                 <tr class="border-b">
@@ -228,30 +250,28 @@
                         </div>
 
                         <!-- Total Exams -->
-                        <div class="bg-white p-6 rounded-2xl">
+                        <div class="bg-white p-5 sm:p-6 rounded-2xl">
                             <h3 class="font-semibold">Total Exams</h3>
-                            <p class="text-3xl font-bold mt-2">256</p>
+                            <p class="text-2xl sm:text-3xl font-bold mt-2">256</p>
                             <p class="text-sm text-gray-500">This month</p>
                         </div>
 
                         <!-- Notifications -->
-                        <div class="bg-white p-6 rounded-2xl">
+                        <div class="bg-white p-5 sm:p-6 rounded-2xl">
                             <h3 class="font-semibold mb-3">Notifications</h3>
                             <p class="text-sm">🚨 Emergency School Closure – 4:00 PM</p>
                             <p class="text-sm">🎯 New Extracurricular Clubs – 4:00 PM</p>
                         </div>
 
-
                     </div>
 
-                    <!-- RIGHT -->
-                    <div class="col-span-5 space-y-6">
+                    <!-- RIGHT PANEL -->
+                    <div class="lg:col-span-5 space-y-6">
 
                         <!-- Course Stats -->
-                        <div class="bg-white p-6 rounded-2xl text-center">
+                        <div class="bg-white p-5 sm:p-6 rounded-2xl text-center">
                             <h3 class="font-semibold mb-2">Course Statistics</h3>
 
-                            <!-- Chart Wrapper (controls size) -->
                             <div class="relative w-full h-40 mx-auto">
                                 <canvas id="chart"></canvas>
                             </div>
@@ -259,9 +279,8 @@
                             <p class="mt-3 font-semibold">Total: 15,000</p>
                         </div>
 
-
                         <!-- Library -->
-                        <div class="bg-white p-6 rounded-2xl">
+                        <div class="bg-white p-5 sm:p-6 rounded-2xl">
                             <h3 class="font-semibold mb-3">Library</h3>
                             <ul class="text-sm space-y-2">
                                 <li>📘 Literature — 302 files</li>
@@ -275,44 +294,44 @@
                 </div>
             </section>
 
-            <!-- OTHER SECTIONS -->
-            <section id="students" class="section p-6 space-y-6">
+            <!-- ================= STUDENTS SECTION ================= -->
+            <section id="students" class="section p-4 sm:p-6 space-y-6">
 
                 <!-- Header -->
-                <div class="flex items-center justify-between">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div>
-                        <h2 class="text-2xl font-semibold text-gray-800">Students</h2>
+                        <h2 class="text-xl sm:text-2xl font-semibold text-gray-800">Students</h2>
                         <p class="text-sm text-gray-500">Manage students, performance & attendance</p>
                     </div>
-                    <div>
+                    <div class="flex gap-2">
                         <button
-                            class="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 transition">
+                            class="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 transition text-sm">
                             ➖ Remove Student
                         </button>
                         <button
-                            class="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 transition">
+                            class="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 transition text-sm">
                             ➕ Add Student
                         </button>
                     </div>
                 </div>
 
                 <!-- Stats Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div class="bg-white rounded-xl shadow p-4">
                         <p class="text-sm text-gray-500">Total Students</p>
-                        <h3 class="text-2xl font-bold text-indigo-600">15,000</h3>
+                        <h3 class="text-xl sm:text-2xl font-bold text-indigo-600">15,000</h3>
                     </div>
                     <div class="bg-white rounded-xl shadow p-4">
                         <p class="text-sm text-gray-500">Active</p>
-                        <h3 class="text-2xl font-bold text-green-600">14,200</h3>
+                        <h3 class="text-xl sm:text-2xl font-bold text-green-600">14,200</h3>
                     </div>
                     <div class="bg-white rounded-xl shadow p-4">
                         <p class="text-sm text-gray-500">On Leave</p>
-                        <h3 class="text-2xl font-bold text-yellow-500">530</h3>
+                        <h3 class="text-xl sm:text-2xl font-bold text-yellow-500">530</h3>
                     </div>
                     <div class="bg-white rounded-xl shadow p-4">
                         <p class="text-sm text-gray-500">Suspended</p>
-                        <h3 class="text-2xl font-bold text-red-500">270</h3>
+                        <h3 class="text-xl sm:text-2xl font-bold text-red-500">270</h3>
                     </div>
                 </div>
 
@@ -322,7 +341,7 @@
                     <input type="text" placeholder="Search student by name or ID..."
                         class="w-full md:w-1/3 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" />
 
-                    <div class="flex gap-3">
+                    <div class="flex flex-wrap gap-3">
                         <select class="px-4 py-2 border rounded-lg">
                             <option>All Classes</option>
                             <option>Class 01</option>
@@ -1296,6 +1315,66 @@
                 </div>
 
             </section>
+
+            <!-- ================= SUPER ADMIN PROFILE SECTION ================= -->
+            <section id="profile" class="section p-4 sm:p-6 space-y-6">
+
+                <!-- Profile Header -->
+                <div class="bg-white rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+                    <img src="https://i.pravatar.cc/100" class="w-20 h-20 sm:w-24 sm:h-24 rounded-full border">
+
+                    <div class="text-center sm:text-left">
+                        <h3 class="font-semibold text-xl">Mr. Aditya Sharma</h3>
+                        <p class="text-sm text-gray-500">
+                            Super Admin • System Administrator
+                        </p>
+                        <p class="text-sm mt-1">
+                            Admin ID: SA1001
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Details Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <!-- Admin Details -->
+                    <div class="bg-white rounded-2xl p-5 sm:p-6">
+                        <h4 class="font-semibold mb-3">Admin Details</h4>
+                        <p class="text-sm">📧 Email: admin@schooli.com</p>
+                        <p class="text-sm">📞 Phone: +91 98765 43210</p>
+                        <p class="text-sm">🏫 Organization: Schooli Management</p>
+                        <p class="text-sm">📅 Joined On: 01 Jan 2022</p>
+                    </div>
+
+                    <!-- System Access -->
+                    <div class="bg-white rounded-2xl p-5 sm:p-6">
+                        <h4 class="font-semibold mb-3">System Access</h4>
+                        <p class="text-sm">🛡 Role: Super Administrator</p>
+                        <p class="text-sm">🔐 Access Level: Full Control</p>
+                        <p class="text-sm">🌐 Last Login: Today • 10:15 AM</p>
+                        <p class="text-sm">📍 Location: Chennai, India</p>
+                    </div>
+
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="bg-white rounded-2xl p-5 sm:p-6 flex flex-wrap gap-3 justify-end">
+                    <button
+                        class="bg-purple-600 text-white px-5 py-2 rounded-xl text-sm hover:bg-purple-700 transition">
+                        Edit Profile
+                    </button>
+
+                    <button class="border px-5 py-2 rounded-xl text-sm hover:bg-gray-100 transition">
+                        Change Password
+                    </button>
+
+                    <button class="border px-5 py-2 rounded-xl text-sm hover:bg-gray-100 transition">
+                        Security Settings
+                    </button>
+                </div>
+
+            </section>
+
 
         </main>
     </div>
