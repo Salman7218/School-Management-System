@@ -68,6 +68,10 @@
                     class="menu flex items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-100 cursor-pointer">
                     <i class="bi bi-journal-text"></i> Exams & Marks
                 </a>
+                <a data-target="event"
+                    class="menu flex items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-100 cursor-pointer">
+                    <i class="bi bi-calendar-event"></i> Upcoming Event
+                </a>
 
                 <a data-target="profile"
                     class="menu flex items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-100 cursor-pointer">
@@ -210,6 +214,38 @@
                             <p class="text-sm mt-2">📝 Geometry Test – Class 9 B (8 submissions)</p>
                         </div>
 
+                        <div class="bg-white p-5 sm:p-6 rounded-2xl">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="font-semibold">Upcoming Events</h3>
+                                <span class="text-xs text-gray-500">Next 7 days</span>
+                            </div>
+
+                            <ul class="text-sm space-y-3">
+                                <li class="flex gap-3">
+                                    <i class="bi bi-calendar-event text-purple-600"></i>
+                                    <div>
+                                        <p class="font-medium">Parent-Teacher Meeting</p>
+                                        <p class="text-gray-500 text-xs">12 Oct • 10:00 AM • Auditorium</p>
+                                    </div>
+                                </li>
+
+                                <li class="flex gap-3">
+                                    <i class="bi bi-calendar-event text-purple-600"></i>
+                                    <div>
+                                        <p class="font-medium">Science Exhibition</p>
+                                        <p class="text-gray-500 text-xs">18 Oct • 9:00 AM • Block B</p>
+                                    </div>
+                                </li>
+
+                                <li class="flex gap-3">
+                                    <i class="bi bi-calendar-event text-purple-600"></i>
+                                    <div>
+                                        <p class="font-medium">Assessment Submission Deadline</p>
+                                        <p class="text-gray-500 text-xs">20 Oct • Online</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
 
                     <!-- RIGHT PANEL -->
@@ -509,6 +545,36 @@
                 </button>
 
             </section>
+
+            <section id="event" class="section p-4 sm:p-6 bg-white rounded-2xl space-y-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="font-semibold text-lg">Upcoming Events</h3>
+                    <span class="text-xs text-gray-500">Next 30 days</span>
+                </div>
+
+                <div class="grid gap-4 text-sm">
+                    <div class="p-4 border rounded-xl flex justify-between items-center">
+                        <div>
+                            <p class="font-medium">Annual Sports Day</p>
+                            <p class="text-gray-500">22 Oct • 8:30 AM</p>
+                        </div>
+                        <span class="px-2 py-1 text-xs bg-green-100 text-green-600 rounded-lg">
+                            Upcoming
+                        </span>
+                    </div>
+
+                    <div class="p-4 border rounded-xl flex justify-between items-center">
+                        <div>
+                            <p class="font-medium">Internal Assessment Submission</p>
+                            <p class="text-gray-500">25 Oct • Online</p>
+                        </div>
+                        <span class="px-2 py-1 text-xs bg-yellow-100 text-yellow-600 rounded-lg">
+                            Important
+                        </span>
+                    </div>
+                </div>
+            </section>
+
 
             <!-- ================= TEACHER PROFILE SECTION ================= -->
             <section id="profile" class="section p-4 sm:p-6 bg-white rounded-2xl space-y-6">
