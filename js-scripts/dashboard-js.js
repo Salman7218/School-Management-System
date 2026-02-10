@@ -195,6 +195,28 @@ createChart("performanceChart", {
   },
 });
 
+//Admin dashboard chart
+createChart("chart", {
+  type: "doughnut",
+  data: {
+    labels: ["Completed", "Remaining"],
+    datasets: [
+      {
+        data: [12000, 3000],
+        backgroundColor: ["#22c55e", "#e5e7eb"],
+        borderWidth: 0,
+      },
+    ],
+  },
+  options: {
+    cutout: "70%",
+    plugins: {
+      legend: { position: "bottom" },
+    },
+  },
+});
+
+
 // ACCESSIBILITY + UX IMPROVEMENTS
 
 // Add keyboard support to menu items
@@ -240,4 +262,41 @@ if (myProfileLink) {
     // 5) Scroll to top smoothly
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
+}
+
+function toggleEventForm() {
+  const form = document.getElementById("eventForm");
+  form.classList.toggle("translate-x-full");
+}
+
+// admina dashboard notice and event section tab button
+function showTab(tab) {
+
+  const noticesTab = document.getElementById('noticesTab');
+  const eventTab = document.getElementById('eventTab');
+
+  const noticesBtn = document.getElementById('noticesBtn');
+  const eventBtn = document.getElementById('eventBtn');
+
+  // Hide both tabs
+  noticesTab.classList.add('hidden');
+  eventTab.classList.add('hidden');
+
+  // Reset button styles
+  noticesBtn.classList.remove('border-indigo-600', 'text-indigo-600');
+  noticesBtn.classList.add('text-gray-500');
+
+  eventBtn.classList.remove('border-indigo-600', 'text-indigo-600');
+  eventBtn.classList.add('text-gray-500');
+
+  // Show selected tab
+  if (tab === 'notices') {
+    noticesTab.classList.remove('hidden');
+    noticesBtn.classList.add('border-b-2', 'border-indigo-600', 'text-indigo-600');
+    noticesBtn.classList.remove('text-gray-500');
+  } else {
+    eventTab.classList.remove('hidden');
+    eventBtn.classList.add('border-b-2', 'border-indigo-600', 'text-indigo-600');
+    eventBtn.classList.remove('text-gray-500');
+  }
 }
