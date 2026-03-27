@@ -300,3 +300,232 @@ function showTab(tab) {
     eventBtn.classList.remove('text-gray-500');
   }
 }
+
+
+// 
+document.addEventListener("DOMContentLoaded", function () {
+
+  // ================= DEMO DATA =================
+  const resultsData = [
+    { year: 2025, exam: "Midterm", subject: "Math", marks: 88, grade: "A", remark: "Very Good" },
+    { year: 2025, exam: "Midterm", subject: "English", marks: 76, grade: "B+", remark: "Good" },
+    { year: 2025, exam: "Midterm", subject: "Science", marks: 82, grade: "A-", remark: "Well Done" },
+
+    { year: 2024, exam: "Final", subject: "Math", marks: 91, grade: "A+", remark: "Excellent" },
+    { year: 2024, exam: "Final", subject: "English", marks: 79, grade: "B+", remark: "Good" },
+    { year: 2024, exam: "Final", subject: "Science", marks: 85, grade: "A", remark: "Great" }
+  ];
+
+  // ================= TABLE RENDER =================
+  function renderTable() {
+    const year = document.getElementById('yearFilter').value;
+    const exam = document.getElementById('examFilter').value;
+
+    const tbody = document.getElementById('resultsBody');
+    tbody.innerHTML = '';
+
+    const filtered = resultsData.filter(r =>
+      (year === 'all' || r.year == year) &&
+      (exam === 'all' || r.exam === exam)
+    );
+
+    filtered.forEach(r => {
+      tbody.innerHTML += `
+        <tr class="border-b">
+            <td>${r.year}</td>
+            <td>${r.exam}</td>
+            <td>${r.subject}</td>
+            <td>${r.marks} / 100</td>
+            <td class="text-green-600">${r.grade}</td>
+            <td>${r.remark}</td>
+        </tr>
+      `;
+    });
+  }
+
+  // ================= PDF DOWNLOAD (FIXED) =================
+  window.downloadResults = function () {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    doc.setFontSize(16);
+    doc.text("Student Result Report", 14, 15);
+
+    const tableColumn = ["Year", "Exam", "Subject", "Marks", "Grade", "Remarks"];
+    const tableRows = [];
+
+    resultsData.forEach(r => {
+      tableRows.push([
+        r.year,
+        r.exam,
+        r.subject,
+        r.marks + " / 100",
+        r.grade,
+        r.remark
+      ]);
+    });
+
+    doc.autoTable({
+      head: [tableColumn],
+      body: tableRows,
+      startY: 25
+    });
+
+    doc.save("Student_Results.pdf");
+  };
+
+  // ================= CHART =================
+  let performanceChartInstance = null;
+
+  function loadPerformanceChart() {
+    const ctx = document.getElementById('performanceChart2');
+
+    if (performanceChartInstance) {
+      performanceChartInstance.destroy();
+    }
+
+    performanceChartInstance = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Math', 'English', 'Science'],
+        datasets: [{
+          label: 'Marks',
+          data: [88, 76, 82],
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false
+      }
+    });
+  }
+
+  // ================= EVENTS =================
+  document.getElementById('yearFilter').addEventListener('change', renderTable);
+  document.getElementById('examFilter').addEventListener('change', renderTable);
+
+  // ================= INITIAL LOAD =================
+  renderTable();
+  loadPerformanceChart(); // ✅ IMPORTANT
+
+});
+
+
+// Assignments section
+// FILTER FUNCTION
+function filterAssignments(event, status) {
+  const items = document.querySelectorAll(".assignment");
+  const buttons = document.querySelectorAll(".filter-btn");
+
+  // reset buttons
+  buttons.forEach(btn => {
+    btn.classList.remove("text-blue-600", "border-blue-600", "border-b-2");
+    btn.classList.add("text-gray-500");
+  });
+
+  event.currentTarget.classList.add("text-blue-600", "border-blue-600", "border-b-2");
+
+  // filter items
+  items.forEach(item => {
+    if (status === "all" || item.dataset.status === status) {
+      item.style.display = "block";
+    } else {
+      item.style.display = "none";
+    }
+  });
+}
+
+// COUNT FUNCTION
+function updateCounts() {
+  const items = document.querySelectorAll(".assignment");
+
+  let counts = {
+    all: 0,
+    new: 0,
+    pending: 0,
+    submitted: 0
+  };
+
+  items.forEach(item => {
+    const status = item.dataset.status;
+
+    counts.all++;
+    if (counts[status] !== undefined) {
+      counts[status]++;
+    }
+  });
+
+  document.getElementById("count-all").innerText = counts.all;
+  document.getElementById("count-new").innerText = counts.new;
+  document.getElementById("count-pending").innerText = counts.pending;
+  document.getElementById("count-submitted").innerText = counts.submitted;
+}
+
+// SEARCH FUNCTION
+document.getElementById("searchInput").addEventListener("keyup", function () {
+  const value = this.value.toLowerCase();
+  const items = document.querySelectorAll(".assignment");
+
+  items.forEach(item => {
+    const text = item.innerText.toLowerCase();
+    item.style.display = text.includes(value) ? "block" : "none";
+  });
+});
+
+// INIT
+document.addEventListener("DOMContentLoaded", () => {
+  updateCounts();
+});
+
+// Library //
+function openModal() {
+  bookModal.classList.remove('hidden');
+  bookModal.classList.add('flex');
+}
+function closeModal() {
+  bookModal.classList.add('hidden');
+}
+
+function openFineModal() {
+  fineModal.classList.remove('hidden');
+  fineModal.classList.add('flex');
+}
+function closeFineModal() {
+  fineModal.classList.add('hidden');
+}
+
+function switchTab(tab) {
+  availableTab.classList.add('hidden');
+  issuedTab.classList.add('hidden');
+
+  document.getElementById(tab + 'Tab').classList.remove('hidden');
+}
+
+function handleAddBook(e) {
+  e.preventDefault();
+
+  const title = bookTitle.value;
+  const isbn = bookISBN.value;
+
+  const row = `
+  <tr>
+    <td class="px-4 py-2">${title}</td>
+    <td class="px-4 py-2">${isbn}</td>
+    <td class="px-4 py-2">-</td>
+    <td class="px-4 py-2">-</td>
+    <td class="px-4 py-2 text-right">
+      <button class="text-blue-500">Issue</button>
+    </td>
+  </tr>`;
+
+  document.getElementById('bookTable').innerHTML += row;
+
+  closeModal();
+}
+
+function saveFine(e) {
+  e.preventDefault();
+  alert("Fine Saved ✅");
+  closeFineModal();
+}
