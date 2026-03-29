@@ -626,6 +626,9 @@
                         <p class="text-xs text-gray-500">Fine Due</p>
                         <h4 id="fineDue" class="text-lg sm:text-xl font-semibold text-red-500">₹120</h4>
                     </div>
+
+                    <input id="searchInput" type="text" placeholder="Search assignments..." class="w-full sm:w-64 px-4 py-2 rounded-xl text-sm text-black 
+            focus:outline-none focus:ring-2 focus:ring-white/50" />
                 </div>
 
                 <!-- TABLE -->
@@ -998,6 +1001,9 @@
 
                     </div>
                 </div>
+            </section>
+            <!-- ================= EXAMS & RESULTS SECTION  ================= -->
+            <section id="exams" class="section p-4 sm:p-6 space-y-6">
 
                 <!-- DOWNLOAD -->
                 <div class="bg-white rounded-2xl p-6 flex flex-col sm:flex-row justify-between gap-4 shadow-sm">
@@ -1012,7 +1018,8 @@
                     </button>
                 </div>
 
-            </section>
+                <!-- ================= SIDE BY SIDE SECTION ================= -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
             <!-- TIMETABLE SECTION -->
             <section id="timetableSection" class="section hidden p-4 sm:p-6 space-y-6">
@@ -1326,7 +1333,6 @@
             </section>
         </main>
     </div>
-    <!-- PASSWORD MODAL -->
     <!-- PASSWORD MODAL -->
     <div id="passwordModal" class="hidden fixed inset-0 flex items-center justify-center bg-black/50 z-50">
 
