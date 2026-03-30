@@ -1,53 +1,46 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    // ============================
-    // SIDEBAR SECTION SWITCH
-    // ============================
-    const sections = ['dashboard', 'attendance', 'assignments', 'exams', 'timetable', 'studhostel', 'library', 'notices', 'profile'];
     const menuButtons = document.querySelectorAll('.menu-btn');
+    const allSections = document.querySelectorAll('.section');
 
     menuButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             const target = btn.dataset.section;
 
-            // Active button styling
-            menuButtons.forEach(b =>
-                b.classList.remove('bg-gradient-to-r', 'from-purple-100', 'to-indigo-100', 'text-purple-700', 'font-semibold', 'shadow')
-            );
-
-            btn.classList.add('bg-gradient-to-r', 'from-purple-100', 'to-indigo-100', 'text-purple-700', 'font-semibold', 'shadow');
-
-            // Hide all sections
-            sections.forEach(sec => {
-                const el = document.getElementById(sec + 'Section');
-                if (el) el.classList.add('hidden');
+            // Remove active style from all buttons
+            menuButtons.forEach(b => {
+                b.classList.remove(
+                    'bg-gradient-to-r',
+                    'from-purple-100',
+                    'to-indigo-100',
+                    'text-purple-700',
+                    'font-semibold',
+                    'shadow'
+                );
             });
 
-            // Show selected
-            const activeEl = document.getElementById(target + 'Section');
-            if (activeEl) activeEl.classList.remove('hidden');
+            // Add active style to clicked button
+            btn.classList.add(
+                'bg-gradient-to-r',
+                'from-purple-100',
+                'to-indigo-100',
+                'text-purple-700',
+                'font-semibold',
+                'shadow'
+            );
+
+            // Hide ALL sections (auto)
+            allSections.forEach(sec => sec.classList.add('hidden'));
+
+            // Show selected section
+            const activeEl = document.getElementById(`${target}Section`);
+            if (activeEl) {
+                activeEl.classList.remove('hidden');
+            } else {
+                console.warn(`Section not found: ${target}Section`);
+            }
         });
     });
-
-
-    // ============================
-    // MOBILE SIDEBAR
-    // ============================
-    const sidebar = document.getElementById('sidebar');
-    const mobileOverlay = document.getElementById('mobileOverlay');
-    const mobileSidebarBtn = document.getElementById('mobileSidebarBtn');
-
-    if (mobileSidebarBtn && sidebar && mobileOverlay) {
-        mobileSidebarBtn.addEventListener('click', () => {
-            sidebar.classList.toggle('-translate-x-full');
-            mobileOverlay.classList.toggle('hidden');
-        });
-
-        mobileOverlay.addEventListener('click', () => {
-            sidebar.classList.add('-translate-x-full');
-            mobileOverlay.classList.add('hidden');
-        });
-    }
 
 
     // ============================
@@ -207,4 +200,94 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Open modal
+    document.getElementById('openAssignmentModal')?.addEventListener('click', () => {
+        document.getElementById('assignmentModal').classList.remove('hidden');
+    });
+
+    // Close modal
+    document.getElementById('closeAssignmentModal')?.addEventListener('click', () => {
+        document.getElementById('assignmentModal').classList.add('hidden');
+    });
+
+    // Save assignment (basic demo)
+    document.getElementById('saveAssignment')?.addEventListener('click', () => {
+
+        const title = document.getElementById('assignmentTitle').value;
+        const cls = document.getElementById('assignmentClassSelect').value;
+        const due = document.getElementById('assignmentDue').value;
+
+        if (!title || !due) {
+            alert("Please fill all fields");
+            return;
+        }
+
+        const container = document.getElementById('assignmentList');
+
+        const card = document.createElement('div');
+        card.className = "assignment-card bg-white p-5 rounded-2xl shadow-sm space-y-3";
+        card.setAttribute('data-class', cls);
+
+        card.innerHTML = `
+        <p class="text-xs text-gray-500">${cls}</p>
+        <h3 class="font-semibold">${title}</h3>
+        <p class="text-xs text-gray-400">Due: ${due}</p>
+        <span class="text-xs px-2 py-1 bg-yellow-100 text-yellow-600 rounded-full">
+            New
+        </span>
+    `;
+
+        container.prepend(card);
+
+        document.getElementById('assignmentModal').classList.add('hidden');
+    });
+
+
+    // Open modal
+    document.getElementById('openNoticeModal')?.addEventListener('click', () => {
+        document.getElementById('noticeModal').classList.remove('hidden');
+    });
+
+    // Close modal
+    document.getElementById('closeNoticeModal')?.addEventListener('click', () => {
+        document.getElementById('noticeModal').classList.add('hidden');
+    });
+
+    // Save notice
+    document.getElementById('saveNotice')?.addEventListener('click', () => {
+
+        const title = document.getElementById('noticeTitle').value;
+        const cls = document.getElementById('noticeClass').value;
+        const desc = document.getElementById('noticeDesc').value;
+
+        if (!title || !desc) {
+            alert("Fill all fields");
+            return;
+        }
+
+        const container = document.getElementById('noticeList');
+
+        const card = document.createElement('div');
+        card.className = "notice-card bg-white p-4 rounded-2xl shadow-sm";
+        card.setAttribute('data-class', cls);
+
+        const today = new Date().toLocaleDateString();
+
+        card.innerHTML = `
+        <div class="flex justify-between">
+            <div>
+                <h3 class="font-semibold text-sm">📢 ${title}</h3>
+                <p class="text-xs text-gray-500 mt-1">Class ${cls} • ${today}</p>
+            </div>
+            <span class="text-xs px-2 py-1 bg-yellow-100 text-yellow-600 rounded-full">
+                New
+            </span>
+        </div>
+        <p class="text-sm text-gray-600 mt-2">${desc}</p>
+    `;
+
+        container.prepend(card);
+
+        document.getElementById('noticeModal').classList.add('hidden');
+    });
 });
