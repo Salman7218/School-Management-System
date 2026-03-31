@@ -184,16 +184,17 @@
                             class="flex items-center gap-2 bg-gradient-to-r from-white/70 to-white/60 backdrop-blur-md px-2 py-1.5 rounded-full transition shadow-md hover:scale-105">
                             <img src="https://i.pravatar.cc/100"
                                 class="rounded-full w-9 h-9 border-2 border-white shadow" />
-                            <span class="font-medium hidden sm:inline text-sm">Student Name</span>
+                            <span class="font-medium hidden sm:inline text-sm">Aditya</span>
                         </button>
 
                         <div id="profileMenu" class="hidden absolute right-0 mt-4 w-56 
                               bg-white/95 backdrop-blur-2xl rounded-2xl shadow-2xl border border-white/40 z-50">
                             <div class="px-4 py-4 border-b">
-                                <p class="font-semibold">Student Name</p>
+                                <p class="font-semibold">Aditya</p>
                             </div>
                             <ul class="py-2 text-sm">
-                                <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">My Profile</li>
+                                <li onclick="openSection('profile')" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                                    My Profile</li>
                                 <li id="openPasswordModal" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Password
                                     Change</li>
                             </ul>
@@ -1271,62 +1272,93 @@
 
             <!-- PROFILE SECTION -->
             <section id="profileSection" class="section hidden p-4 sm:p-6 space-y-6">
-
-                <!-- PROFILE HEADER -->
-                <div class="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl p-5 sm:p-6 
+             
+                    <!-- PROFILE HEADER -->
+                    <div class="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl p-5 sm:p-6 
     flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
 
-                    <img src="https://i.pravatar.cc/100"
-                        class="w-20 h-20 sm:w-24 sm:h-24 rounded-full border-4 border-white shadow" />
+                        <img src="https://i.pravatar.cc/100"
+                            class="w-20 h-20 sm:w-24 sm:h-24 rounded-full border-4 border-white shadow" />
 
-                    <div class="text-center sm:text-left w-full">
-                        <h3 id="profileName" class="font-semibold text-lg sm:text-xl text-white">
-                            Student Name
-                        </h3>
+                        <div class="text-center sm:text-left w-full">
+                            <h3 class="font-semibold text-lg sm:text-xl text-white">
+                                Aditya Patil
+                            </h3>
 
-                        <p class="text-xs sm:text-sm text-white mt-1 opacity-90">
-                            Class: <span id="profileClass">10-A</span> •
-                            Section: <span id="profileSectionName">A</span> •
-                            Roll No: <span id="profileRoll">12</span>
-                        </p>
-                    </div>
-                </div>
-
-                <!-- DETAILS -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-
-                    <!-- PERSONAL -->
-                    <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm space-y-2">
-                        <h4 class="font-semibold">Personal Details</h4>
-
-                        <p>📅 DOB: <span id="dob">2005-05-10</span></p>
-                        <p>👤 Gender: <span id="gender">Male</span></p>
-                        <p>📞 Phone: <span id="phone">9876543210</span></p>
-                        <p>📧 Email: <span id="email">student@mail.com</span></p>
+                            <p class="text-xs sm:text-sm text-white mt-1 opacity-90">
+                                Class: 10 • Section: A • Roll No: 12
+                            </p>
+                        </div>
                     </div>
 
-                    <!-- PARENT -->
-                    <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm space-y-2">
-                        <h4 class="font-semibold">Parent Details</h4>
+                    <!-- DETAILS GRID -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
 
-                        <p>👨 Father: <span id="parentName">Mr. Sharma</span></p>
-                        <p>📞 Contact: <span id="parentPhone">9999999999</span></p>
-                        <p>📧 Email: <span id="parentEmail">parent@mail.com</span></p>
-                        <p>🏠 Address: <span id="address">Pune, India</span></p>
+                        <!-- PERSONAL DETAILS -->
+                        <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm space-y-3">
+                            <h4 class="font-semibold text-sm sm:text-base mb-2">
+                                Personal Details
+                            </h4>
+
+                            <p class="text-sm">📅 DOB: 2005-05-10</p>
+                            <p class="text-sm">👤 Gender: Male</p>
+                            <p class="text-sm">🩸 Blood Group: O+</p>
+                            <p class="text-sm">📞 Phone: 9876543210</p>
+                            <p class="text-sm break-all">📧 Email: example@email.com</p>
+                        </div>
+
+                        <!-- FAMILY DETAILS -->
+                        <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm space-y-3">
+                            <h4 class="font-semibold text-sm sm:text-base mb-2">
+                                Family Details
+                            </h4>
+
+                            <p class="text-sm">👨 Father: Digvigy Patil</p>
+                            <p class="text-sm">📞 9876543211</p>
+
+                            <p class="text-sm">👩 Mother: Sangita Patil</p>
+                            <p class="text-sm">📞 9876543212</p>
+
+                            <p class="text-sm">🏠 Mahajanpur, Maharashtra</p>
+                        </div>
+
+                        <!-- EMERGENCY -->
+                        <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm space-y-3">
+                            <h4 class="font-semibold text-sm sm:text-base mb-2">
+                                Emergency Contact
+                            </h4>
+
+                            <p class="text-sm">🚨 Chetan Patil</p>
+                            <p class="text-sm">📞 9999999999</p>
+                            <p class="text-sm">🔗 Uncle</p>
+                        </div>
+
+                        <!-- MEDICAL -->
+                        <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm space-y-3">
+                            <h4 class="font-semibold text-sm sm:text-base mb-2">
+                                Medical Info
+                            </h4>
+
+                            <p class="text-sm">🩺 None</p>
+                            <p class="text-sm">⚠️ No allergies</p>
+                        </div>
+
                     </div>
-                </div>
 
-                <!-- ACTION -->
-                <div class="bg-white rounded-2xl p-4 sm:p-6 flex justify-end">
-                    <button id="editProfileBtn"
-                        class="bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded-xl text-sm">
-                        Edit Profile
-                    </button>
-                </div>
-            </section>
+                    <!-- ACTION BUTTON -->
+                    <div class="bg-white rounded-2xl p-4 sm:p-6">
+                        <div class="flex justify-end">
+                            <button class="w-full sm:w-auto bg-purple-600 hover:bg-purple-700 transition 
+        text-white px-5 py-2 rounded-xl text-sm">
+                                Edit Profile
+                            </button>
+                        </div>
+                    </div>
+
+                </section>
         </main>
     </div>
-    
+
     <!-- PASSWORD MODAL -->
     <div id="passwordModal" class="hidden fixed inset-0 flex items-center justify-center bg-black/50 z-50">
 
