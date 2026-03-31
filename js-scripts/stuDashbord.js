@@ -122,4 +122,62 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+
+
+
 });
+
+function openClass(classId) {
+
+    // Hide classes
+    document.getElementById('classesSection').classList.add('hidden');
+
+    // Show students section
+    document.getElementById('studentsSection').classList.remove('hidden');
+
+    // Hide all student groups
+    document.querySelectorAll('.student-group').forEach(group => {
+        group.classList.add('hidden');
+    });
+
+    // Show selected class students
+    document.getElementById(classId).classList.remove('hidden');
+
+    // Set title
+    document.getElementById('classTitle').innerText = "Class " + classId.replace("A", "-A").replace("B", "-B") + " Students";
+}
+
+function goBack() {
+    document.getElementById('studentsSection').classList.add('hidden');
+    document.getElementById('classesSection').classList.remove('hidden');
+}
+
+
+function openModal() {
+    document.getElementById('studentModal').classList.remove('hidden');
+    document.getElementById('studentModal').classList.add('flex');
+}
+
+function closeModal() {
+    document.getElementById('studentModal').classList.add('hidden');
+}
+
+// TAB SWITCH
+function switchTab(tabId) {
+
+    // hide all
+    document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.add('hidden');
+    });
+
+    // remove active style
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('border-blue-500', 'text-blue-600');
+    });
+
+    // show selected
+    document.getElementById(tabId).classList.remove('hidden');
+
+    // highlight active tab
+    event.target.classList.add('border-blue-500', 'text-blue-600');
+}
