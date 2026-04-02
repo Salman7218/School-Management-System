@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>School Dashboard | Teacher</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="./css/style.css    ">
+    <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
@@ -25,10 +26,17 @@
         <div id="mobileOverlay" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-[50] md:hidden"></div>
 
         <!-- SIDEBAR -->
-        <aside id="sidebar"
-            class="fixed top-0 left-0 h-screen w-64
-            bg-white/95 backdrop-blur-xl border-r shadow-2xl z-[60]
-            flex flex-col transform -translate-x-full md:translate-x-0 transition-transform duration-300 dark:bg-slate-900 text-gray-800 dark:text-gray-100">
+        <!-- MOBILE OVERLAY -->
+        <div id="mobileOverlay" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-[50] md:hidden"></div>
+
+        <!-- SIDEBAR -->
+        <aside id="sidebar" class="fixed top-0 left-0 h-screen w-64
+    bg-white/95 dark:bg-slate-900
+    backdrop-blur-xl border-r shadow-2xl z-[60]
+    flex flex-col
+    transform -translate-x-full md:translate-x-0
+    transition-transform duration-300
+    text-gray-800 dark:text-gray-100">
 
             <!-- LOGO -->
             <div class="px-6 py-5 border-b flex items-center gap-2">
@@ -36,101 +44,106 @@
                 <span class="app-name font-bold text-lg text-purple-600"></span>
             </div>
 
-            <!-- NAV -->
-            <nav class="flex-1 overflow-y-auto px-4 py-4 space-y-2 text-sm">
+            <!-- SCROLLABLE AREA -->
+            <div class="relative flex-1 overflow-hidden">
 
-                <!-- ===== MAIN ===== -->
-                <p class="text-xs text-gray-400 px-2 mt-2">MAIN</p>
+                <!-- TOP FADE -->
+                <div class="pointer-events-none absolute top-0 left-0 w-full h-6 
+        bg-gradient-to-b from-white dark:from-slate-900 to-transparent z-10"></div>
 
-                <button data-section="dashboard"
-                    class="menu-btn relative flex w-full items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-purple-100 to-indigo-100 text-purple-700 font-semibold shadow">
-                    <i class="bi bi-grid-fill"></i>
-                    <span>Dashboard</span>
-                </button>
+                <!-- NAV -->
+                <nav class="h-full overflow-y-auto no-scrollbar scroll-smooth px-4 py-4 space-y-2 text-sm">
 
-                <button data-section="analytics"
-                    class="menu-btn flex w-full items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-100">
-                    <i class="bi bi-bar-chart"></i>
-                    <span>Analytics</span>
-                </button>
+                    <!-- MAIN -->
+                    <p class="text-xs text-gray-400 px-2 mt-2">MAIN</p>
 
-                <!-- ===== ACADEMIC ===== -->
-                <p class="text-xs text-gray-400 px-2 mt-4">ACADEMIC</p>
+                    <button data-section="dashboard" class="menu-btn flex w-full items-center gap-3 px-4 py-3 rounded-xl
+                bg-gradient-to-r from-purple-100 to-indigo-100
+                text-purple-700 font-semibold shadow">
+                        <i class="bi bi-grid-fill"></i>
+                        Dashboard
+                    </button>
 
-                <button data-section="classes"
-                    class="menu-btn flex w-full items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-100">
-                    <i class="bi bi-easel"></i>
-                    <span>My Classes</span>
-                </button>
+                    <button data-section="analytics" class="menu-btn flex w-full items-center gap-3 px-4 py-3 rounded-xl
+                text-gray-500 hover:bg-gray-100 dark:hover:bg-slate-800">
+                        <i class="bi bi-bar-chart"></i>
+                        Analytics
+                    </button>
 
-                <button data-section="attendance"
-                    class="menu-btn flex w-full items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-100">
-                    <i class="bi bi-calendar-check"></i>
-                    <span>Attendance</span>
-                </button>
+                    <!-- ACADEMIC -->
+                    <p class="text-xs text-gray-400 px-2 mt-4">ACADEMIC</p>
 
-                <button data-section="assignments"
-                    class="menu-btn flex w-full items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-100">
-                    <i class="bi bi-journal-text"></i>
-                    <span>Assignments</span>
-                </button>
+                    <button data-section="classes"
+                        class="menu-btn flex w-full items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-800">
+                        <i class="bi bi-easel"></i> My Classes
+                    </button>
 
-                <button data-section="exams"
-                    class="menu-btn flex w-full items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-100">
-                    <i class="bi bi-award"></i>
-                    <span>Results & Marks</span>
-                </button>
+                    <button data-section="attendance"
+                        class="menu-btn flex w-full items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-800">
+                        <i class="bi bi-calendar-check"></i> Attendance
+                    </button>
 
-                <button data-section="timetable"
-                    class="menu-btn flex w-full items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-100">
-                    <i class="bi bi-clock"></i>
-                    <span>Timetable</span>
-                </button>
+                    <button data-section="assignments"
+                        class="menu-btn flex w-full items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-800">
+                        <i class="bi bi-journal-text"></i> Assignments
+                    </button>
 
-                <!-- ===== STUDENT MANAGEMENT ===== -->
-                <p class="text-xs text-gray-400 px-2 mt-4">STUDENTS</p>
+                    <button data-section="exams"
+                        class="menu-btn flex w-full items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-800">
+                        <i class="bi bi-award"></i> Results & Marks
+                    </button>
 
-                <button data-section="notices"
-                    class="menu-btn flex w-full items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-100">
-                    <i class="bi bi-bell"></i>
-                    <span>Notices</span>
-                </button>
+                    <button data-section="timetable"
+                        class="menu-btn flex w-full items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-800">
+                        <i class="bi bi-clock"></i> Timetable
+                    </button>
 
-                <button data-section="leave"
-                    class="menu-btn flex w-full items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-100">
-                    <i class="bi bi-envelope-paper"></i>
-                    <span>Student Leave</span>
-                </button>
+                    <!-- STUDENTS -->
+                    <p class="text-xs text-gray-400 px-2 mt-4">STUDENTS</p>
 
-                <!-- ===== TEACHER PERSONAL ===== -->
-                <p class="text-xs text-gray-400 px-2 mt-4">MY SPACE</p>
+                    <button data-section="notices"
+                        class="menu-btn flex w-full items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-800">
+                        <i class="bi bi-bell"></i> Notices
+                    </button>
 
-                <button data-section="teacherLeave"
-                    class="menu-btn flex w-full items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-100">
-                    <i class="bi bi-calendar-plus"></i>
-                    <span>My Leave</span>
-                </button>
+                    <button data-section="leave"
+                        class="menu-btn flex w-full items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-800">
+                        <i class="bi bi-envelope-paper"></i> Student Leave
+                    </button>
 
-                <button data-section="profile"
-                    class="menu-btn flex w-full items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-100">
-                    <i class="bi bi-person"></i>
-                    <span>Profile</span>
-                </button>
+                    <!-- MY SPACE -->
+                    <p class="text-xs text-gray-400 px-2 mt-4">MY SPACE</p>
 
-                <!-- ===== SYSTEM ===== -->
-                <p class="text-xs text-gray-400 px-2 mt-4">SYSTEM</p>
+                    <button data-section="teacherLeave"
+                        class="menu-btn flex w-full items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-800">
+                        <i class="bi bi-calendar-plus"></i> My Leave
+                    </button>
 
-                <button data-section="settings"
-                    class="menu-btn flex w-full items-center gap-3 px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-100">
-                    <i class="bi bi-gear"></i>
-                    <span>Settings</span>
-                </button>
+                    <button data-section="profile"
+                        class="menu-btn flex w-full items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-800">
+                        <i class="bi bi-person"></i> Profile
+                    </button>
 
-            </nav>
+                    <!-- SYSTEM -->
+                    <p class="text-xs text-gray-400 px-2 mt-4">SYSTEM</p>
+
+                    <button data-section="settings"
+                        class="menu-btn flex w-full items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-800">
+                        <i class="bi bi-gear"></i> Settings
+                    </button>
+
+                </nav>
+
+                <!-- BOTTOM FADE -->
+                <div class="pointer-events-none absolute bottom-0 left-0 w-full h-6 
+        bg-gradient-to-t from-white dark:from-slate-900 to-transparent z-10"></div>
+            </div>
+
             <!-- FOOTER -->
             <div class="p-4 border-t text-xs text-gray-400">
-                <span class="app-name"></span> © 2026 
+                <span class="app-name"></span> © 2026
             </div>
+
         </aside>
 
         <!-- MAIN -->
@@ -148,9 +161,6 @@
                 <!-- MOBILE LOGO -->
                 <div class="flex items-center gap-2 md:hidden">
                     <i class="bi bi-mortarboard text-indigo-600 text-lg"></i>
-                    <span class="app-name font-semibold text-gray-700 dark:text-gray-200 text-sm truncate max-w-[140px]">
-                        MySchool
-                    </span>
                 </div>
 
                 <!-- DESKTOP SEARCH -->
@@ -169,9 +179,9 @@
 
                 <!-- RIGHT ICONS -->
                 <div class="flex items-center gap-2 sm:gap-4">
-                    <button id="darkToggleBtn" class="transition">
+                    <!-- <button id="darkToggleBtn" class="transition">
                         <span id="darkIcon">🌙</span>
-                    </button>
+                    </button> -->
                     <!-- MOBILE MENU -->
                     <button id="mobileSidebarBtn" class="md:hidden bg-white/70 dark:bg-slate-700/70 
             backdrop-blur-md hover:bg-white dark:hover:bg-slate-600
@@ -263,17 +273,26 @@
                             </div>
 
                             <ul class="py-2 text-sm">
+
                                 <li onclick="openSection('profile')"
-                                    class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-slate-700 cursor-pointer">
+                                    class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-slate-700 cursor-pointer">
+                                    <i class="fa-solid fa-user text-gray-500"></i>
                                     My Profile
                                 </li>
 
                                 <li id="openPasswordModal"
-                                    class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-slate-700 cursor-pointer">
+                                    class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-slate-700 cursor-pointer">
+                                    <i class="fa-solid fa-lock text-gray-500"></i>
                                     Password Change
                                 </li>
-                            </ul>
 
+                                <li onclick="openSection('settings')"
+                                    class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-slate-700 cursor-pointer">
+                                    <i class="fa-solid fa-gear text-gray-500"></i>
+                                    Settings
+                                </li>
+
+                            </ul>
                             <div class="border-t dark:border-slate-700">
                                 <button id="logoutBtn"
                                     class="w-full px-4 py-3 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30">
