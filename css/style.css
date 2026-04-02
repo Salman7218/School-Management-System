@@ -1,0 +1,108 @@
+.maincolor {
+    font-family: Inter, system-ui, sans-serif;
+    background-color: #e5e7ec;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(40px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.animate-slideUp {
+    animation: slideUp 0.3s ease;
+}
+
+
+.notification {
+    min-width: 280px;
+    max-width: 320px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    color: white;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    transform: translateX(120%);
+    opacity: 0;
+    transition: all 0.4s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 10px;
+}
+
+.notification.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.notification.success {
+    background: #22c55e;
+}
+
+.notification.info {
+    background: #6366f1;
+}
+
+.notification.warning {
+    background: #f59e0b;
+}
+
+.notification.error {
+    background: #ef4444;
+}
+
+.notification button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+
+
+/* CARDS */
+.dark .bg-white {
+    background-color: #1e293b !important;
+    color: #e5e7eb;
+}
+
+/* TEXT */
+.dark .text-gray-500,
+.dark .text-gray-400 {
+    color: #94a3b8 !important;
+}
+
+/* INPUTS */
+.dark input,
+.dark textarea,
+.dark select {
+    background-color: #334155 !important;
+    color: white !important;
+    border-color: #475569 !important;
+}
+
+/* SIDEBAR */
+.dark aside {
+    background-color: #1e293b !important;
+}
+
+/* HEADER */
+.dark .bg-gradient-to-r.from-white\/70 {
+    background: #1e293b !important;
+}
+
+/* BUTTON HOVER */
+.dark .hover\:bg-gray-100:hover {
+    background-color: #334155 !important;
+}
+
+* {
+    transition: background-color 0.3s, color 0.3s;
+}
