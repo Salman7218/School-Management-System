@@ -1,3 +1,8 @@
+const APP_NAME = "MySchool";
+document.querySelectorAll(".app-name").forEach(el => {
+  el.textContent = APP_NAME;
+});
+
 function openSection(sectionName) {
     const allSections = document.querySelectorAll('.section');
     const menuButtons = document.querySelectorAll('.menu-btn');
