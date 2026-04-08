@@ -138,33 +138,96 @@ function markAsRead(btn) {
 
 
 // =========================EXAM and RESULT ==============================
-// ================= AUTO CALCULATE =================
-document.querySelectorAll('.mark-row').forEach(row => {
+//  DATA 
+const students = [
+    { id: 1, name: "Aditya Patil", roll: "01", division: "10-A", marks: null, status: "Draft" },
+    { id: 2, name: "Digvijay Patil", roll: "02", division: "10-A", marks: null, status: "Pending" },
+];
 
-    const inputs = row.querySelectorAll('.mark-input');
-    const totalEl = row.querySelector('.total');
-    const percentEl = row.querySelector('.percent');
-    const gradeEl = row.querySelector('.grade');
+let currentIndex = 0;
 
-    inputs.forEach(input => {
-        input.addEventListener('input', () => {
+const maxMarks = [20, 50, 10, 20];
+const maxTotal = 100;
 
-            let total = 0;
-            inputs.forEach(i => total += Number(i.value || 0));
 
-            let percent = total; // adjust if max != 100
+//  MODAL 
+function openMarksModal(index) {
+    currentIndex = index;
+    document.getElementById("marksModal").classList.remove("hidden");
+    loadStudent();
+}
 
-            totalEl.textContent = total;
-            percentEl.textContent = percent + "%";
-            gradeEl.textContent = getGrade(percent);
+function closeMarksModal() {
+    document.getElementById("marksModal").classList.add("hidden");
+}
 
-        });
+
+//  LOAD STUDENT 
+function loadStudent() {
+
+    const student = students[currentIndex];
+
+    document.getElementById("studentName").innerHTML = `
+        ${student.name}
+        <div class="text-xs text-gray-500 font-normal">
+            Roll No. ${student.roll} • Division ${student.division}
+        </div>
+    `;
+
+    const inputs = document.querySelectorAll(".mark-input-modal");
+
+    inputs.forEach((input, i) => {
+        input.value = student.marks ? (student.marks[i] || "") : "";
     });
 
-});
+    updateModalResult();
+}
 
-// ================= GRADE LOGIC =================
+
+//  INPUT LISTENER 
+function attachInputListeners() {
+
+    document.querySelectorAll(".mark-input-modal").forEach((input, index) => {
+
+        input.addEventListener("input", () => {
+
+            let val = Number(input.value || 0);
+
+            if (val > maxMarks[index]) {
+                val = maxMarks[index];
+                input.value = val;
+            }
+
+            updateModalResult();
+        });
+
+    });
+
+}
+
+
+//  CALC 
+function updateModalResult() {
+
+    const inputs = document.querySelectorAll(".mark-input-modal");
+
+    let total = 0;
+
+    inputs.forEach(input => {
+        total += Number(input.value || 0);
+    });
+
+    let percent = ((total / maxTotal) * 100).toFixed(1);
+
+    document.getElementById("modalTotal").textContent = total;
+    document.getElementById("modalPercent").textContent = percent + "%";
+    document.getElementById("modalGrade").textContent = getGrade(percent);
+}
+
+
+//  GRADE 
 function getGrade(p) {
+    p = Number(p);
     if (p >= 90) return "A+";
     if (p >= 75) return "A";
     if (p >= 60) return "B";
@@ -172,18 +235,175 @@ function getGrade(p) {
     return "F";
 }
 
-// ================= SUBMIT =================
-function submitMarks() {
 
-    document.querySelectorAll('.status').forEach(el => {
-        el.textContent = "Submitted";
-        el.className = "status text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full";
+//  SAVE 
+function saveMarks() {
+
+    const inputs = document.querySelectorAll(".mark-input-modal");
+
+    const marks = [];
+
+    inputs.forEach((input, i) => {
+        let val = Number(input.value || 0);
+        if (val > maxMarks[i]) val = maxMarks[i];
+        marks.push(val);
     });
 
-    alert("Marks submitted for verification!");
+    students[currentIndex].marks = marks;
+    students[currentIndex].status = "Submitted";
+
+    updateStudentListUI();
+
+    showToast("Marks saved successfully ✅");
 }
 
-// ================= REPORT MODAL =================
+
+//  UPDATE LIST 
+function updateStudentListUI() {
+
+    const rows = document.querySelectorAll(".student-row");
+
+    rows.forEach((row, index) => {
+
+        const statusEl = row.querySelector(".status-badge, .status-badge-premium");
+
+        // ✅ FIX: prevent crash
+        if (!statusEl) return;
+
+        const student = students[index];
+
+        if (student.status === "Submitted") {
+            statusEl.textContent = "Submitted";
+            statusEl.className = "status-badge-pro submitted";
+        } else if (student.status === "Draft") {
+            statusEl.textContent = "Draft";
+            statusEl.className = "status-badge-pro pending";
+        } else {
+            statusEl.textContent = "Pending";
+            statusEl.className = "status-badge-pro pending";
+        }
+
+    });
+
+}
+
+//  NAVIGATION 
+function nextStudent() {
+
+    if (currentIndex < students.length - 1) {
+        autoSaveBeforeSwitch();
+        currentIndex++;
+        loadStudent();
+    } else {
+        showToast("Last student");
+    }
+
+}
+
+function prevStudent() {
+
+    if (currentIndex > 0) {
+        autoSaveBeforeSwitch();
+        currentIndex--;
+        loadStudent();
+    } else {
+        showToast("First student");
+    }
+
+}
+
+
+//  AUTO SAVE 
+function autoSaveBeforeSwitch() {
+
+    const inputs = document.querySelectorAll(".mark-input-modal");
+
+    let hasValue = false;
+
+    inputs.forEach(input => {
+        if (input.value !== "") hasValue = true;
+    });
+
+    if (!hasValue) return;
+
+    const marks = [];
+
+    inputs.forEach(input => {
+        marks.push(Number(input.value || 0));
+    });
+
+    students[currentIndex].marks = marks;
+    students[currentIndex].status = "Draft";
+}
+
+
+//  SWIPE 
+let startX = 0;
+
+const modal = document.getElementById("marksModal");
+
+modal.addEventListener("touchstart", (e) => {
+    startX = e.touches[0].clientX;
+});
+
+modal.addEventListener("touchend", (e) => {
+
+    let endX = e.changedTouches[0].clientX;
+
+    if (startX - endX > 50) nextStudent();
+    if (endX - startX > 50) prevStudent();
+});
+
+
+//  KEYBOARD 
+document.addEventListener("keydown", (e) => {
+
+    const modalOpen = !document.getElementById("marksModal").classList.contains("hidden");
+
+    if (!modalOpen) return;
+
+    if (e.key === "ArrowRight") nextStudent();
+    if (e.key === "ArrowLeft") prevStudent();
+    if (e.key === "Escape") closeMarksModal();
+
+});
+
+
+//  SEARCH 
+function searchStudents(query) {
+
+    query = query.toLowerCase();
+
+    document.querySelectorAll(".student-row").forEach(row => {
+
+        const name = row.querySelector(".student-name").textContent.toLowerCase();
+
+        row.style.display = name.includes(query) ? "flex" : "none";
+
+    });
+
+}
+
+
+//  TOAST 
+function showToast(message) {
+
+    let toast = document.createElement("div");
+
+    toast.textContent = message;
+
+    toast.className = `
+        fixed bottom-5 left-1/2 -translate-x-1/2 
+        bg-black text-white text-sm px-4 py-2 rounded-xl shadow-lg z-50
+    `;
+
+    document.body.appendChild(toast);
+
+    setTimeout(() => toast.remove(), 2000);
+}
+
+
+//  REPORT MODAL 
 function openReportCard() {
     document.getElementById('reportCardModal').classList.remove('hidden');
 }
@@ -196,6 +416,13 @@ function printReport() {
     window.print();
 }
 
+// ========================== INIT ==========================
+document.addEventListener("DOMContentLoaded", () => {
+
+    attachInputListeners();
+    updateStudentListUI();
+
+});
 
 // ======================== MAIN DASHBOARD Charts ====================================
 
@@ -251,11 +478,24 @@ new Chart(subjectCtx, {
             data: [80, 75, 85, 70],
             backgroundColor: [
                 '#6366f1',
-                '#8b5cf6',
+                '#f65c8d',
                 '#22c55e',
                 '#f59e0b'
             ]
         }]
+    },
+    options: {
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        let label = context.label || '';
+                        let value = context.raw || 0;
+                        return `${label}: ${value}% average marks`;
+                    }
+                }
+            }
+        }
     }
 });
 
@@ -486,15 +726,15 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-const btn = document.getElementById("darkToggleBtn");
-const icon = document.getElementById("darkIcon");
+// const btn = document.getElementById("darkToggleBtn");
+// const icon = document.getElementById("darkIcon");
 
-btn.addEventListener("click", () => {
-    document.documentElement.classList.toggle("dark");
+// btn.addEventListener("click", () => {
+//     document.documentElement.classList.toggle("dark");
 
-    const isDark = document.documentElement.classList.contains("dark");
+//     const isDark = document.documentElement.classList.contains("dark");
 
-    localStorage.setItem("darkMode", isDark);
+//     localStorage.setItem("darkMode", isDark);
 
-    icon.textContent = isDark ? "☀️" : "🌙";
-});
+//     icon.textContent = isDark ? "☀️" : "🌙";
+// });
