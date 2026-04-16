@@ -181,3 +181,54 @@ function switchTab(tabId) {
     // highlight active tab
     event.target.classList.add('border-blue-500', 'text-blue-600');
 }
+
+// ================= STUDENT LEAVE =================
+
+// AUTO CALCULATE DAYS
+document.getElementById("sLeaveFrom").addEventListener("change", calcStudentDays);
+document.getElementById("sLeaveTo").addEventListener("change", calcStudentDays);
+
+function calcStudentDays() {
+    const from = new Date(document.getElementById("sLeaveFrom").value);
+    const to = new Date(document.getElementById("sLeaveTo").value);
+
+    if (from && to && to >= from) {
+        const diff = (to - from) / (1000 * 60 * 60 * 24) + 1;
+        document.getElementById("sTotalDays").innerText = diff;
+    }
+}
+
+function applyStudentLeave() {
+    const from = document.getElementById("sLeaveFrom").value;
+    const to = document.getElementById("sLeaveTo").value;
+    const reason = document.getElementById("sLeaveReason").value;
+    const days = parseInt(document.getElementById("sTotalDays").innerText);
+
+    if (!from || !to || !reason || days <= 0) {
+        alert("Fill all details correctly");
+        return;
+    }
+
+    const leaveList = document.getElementById("studentLeaveList");
+
+    const item = document.createElement("div");
+    item.className = "flex justify-between bg-yellow-50 p-3 rounded-xl";
+
+    item.innerHTML = `
+        <div>
+            <p>${from} → ${to} (${days} days)</p>
+            <p class="text-xs text-gray-500">${reason}</p>
+        </div>
+        <span class="text-xs bg-yellow-100 text-yellow-600 px-3 py-1 rounded-full">
+            Pending
+        </span>
+    `;
+
+    leaveList.prepend(item);
+
+    // RESET
+    document.getElementById("sLeaveFrom").value = "";
+    document.getElementById("sLeaveTo").value = "";
+    document.getElementById("sLeaveReason").value = "";
+    document.getElementById("sTotalDays").innerText = "0";
+}
