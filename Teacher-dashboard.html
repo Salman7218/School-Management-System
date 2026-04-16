@@ -26,10 +26,6 @@
         <div id="mobileOverlay" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-[50] md:hidden"></div>
 
         <!-- SIDEBAR -->
-        <!-- MOBILE OVERLAY -->
-        <div id="mobileOverlay" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-[50] md:hidden"></div>
-
-        <!-- SIDEBAR -->
         <aside id="sidebar" class="fixed top-0 left-0 h-screen w-64
     bg-white/95 dark:bg-slate-900
     backdrop-blur-xl border-r shadow-2xl z-[60]
@@ -60,12 +56,12 @@
                     <button data-section="dashboard" class="menu-btn flex w-full items-center gap-3 px-4 py-3 rounded-xl
                 bg-gradient-to-r from-purple-100 to-indigo-100
                 text-purple-700 font-semibold shadow">
-                        <i class="bi bi-grid-fill"></i>
+                        <i class="bi bi-grid"></i>
                         Dashboard
                     </button>
 
-                    <button data-section="analytics" class="menu-btn flex w-full items-center gap-3 px-4 py-3 rounded-xl
-                text-gray-500 hover:bg-gray-100 dark:hover:bg-slate-800">
+                    <button data-section="analytics"
+                        class="menu-btn flex w-full items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-800">
                         <i class="bi bi-bar-chart"></i>
                         Analytics
                     </button>
@@ -148,7 +144,7 @@
 
         <!-- MAIN -->
         <main
-            class="flex-1 w-full min-h-screen p-4 sm:p-6 md:p-8 md:ml-64 maincolor transition-all duration-300 maincolor dark:bg-slate-900 text-gray-800 dark:text-gray-100">
+            class="flex-1 w-full min-h-screen p-4 sm:p-6 md:p-8 md:ml-64 maincolor transition-all duration-300 dark:bg-slate-900 text-gray-800 dark:text-gray-100">
 
             <!-- HEADER -->
             <div class="sticky top-0 z-40 px-4 sm:px-6 py-3 
@@ -534,12 +530,17 @@
 
                     <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl shadow-sm">
                         <h3 class="font-semibold mb-4">Class Performance</h3>
-                        <canvas id="classPerformanceChart"></canvas>
+                        <div class="h-48 w-full flex items-center justify-center"> <canvas id="classPerformanceChart"
+                                class="max-w-[300px]"></canvas>
+                        </div>
                     </div>
 
                     <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl shadow-sm">
                         <h3 class="font-semibold mb-4">Subject Analysis</h3>
-                        <canvas id="subjectChart"></canvas>
+
+                        <div class="h-48 w-full flex items-center justify-center">
+                            <canvas id="subjectChart" class="max-w-[300px]"></canvas>
+                        </div>
                     </div>
 
                 </div>
@@ -882,16 +883,16 @@
                     </div>
 
                     <!-- ACTIONS -->
-                    <div class="flex gap-2 flex-wrap w-full sm:w-auto">
+                    <div class="flex gap-2 w-full lg:w-auto">
 
-                        <button onclick="markAllPresent()" class="bg-emerald-100 dark:bg-emerald-900/30 
-                text-emerald-600 px-4 py-2 rounded-xl text-sm w-full sm:w-auto">
-                            Mark All Present
+                        <button onclick="markAllPresent()" class="flex-1 bg-emerald-500 hover:bg-emerald-600 
+        text-white px-4 py-2 rounded-xl text-sm font-medium transition whitespace-nowrap">
+                            All Present
                         </button>
 
-                        <button onclick="markAllAbsent()" class="bg-red-100 dark:bg-red-900/30 
-                text-red-600 px-4 py-2 rounded-xl text-sm w-full sm:w-auto">
-                            Mark All Absent
+                        <button onclick="markAllAbsent()" class="flex-1 bg-red-500 hover:bg-red-600 
+        text-white px-4 py-2 rounded-xl text-sm font-medium transition whitespace-nowrap">
+                            All Absent
                         </button>
 
                     </div>
@@ -899,7 +900,7 @@
                 </div>
 
                 <!-- SUMMARY -->
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
 
                     <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm text-center">
                         <p class="text-sm text-gray-400 dark:text-gray-500">Total</p>
@@ -943,49 +944,56 @@
                 rounded-xl text-sm w-full sm:w-64">
                     </div>
 
-                    <!-- TABLE HEADER -->
-                    <div class="grid grid-cols-12 px-4 py-2 text-xs 
-            text-gray-500 dark:text-gray-400 
-            bg-gray-50 dark:bg-slate-700">
+                    <!-- MOBILE CARD VIEW -->
+                    <div class="divide-y max-h-[400px] overflow-y-auto">
 
-                        <div class="col-span-2">Roll No</div>
-                        <div class="col-span-4">Student Name</div>
-                        <div class="col-span-2">Division</div>
-                        <div class="col-span-4 text-right">Attendance</div>
-                    </div>
+                        <!-- STUDENT CARD -->
+                        <div class="p-3 flex justify-between items-center gap-3 attendance-row">
 
-                    <!-- LIST -->
-                    <div id="studentList" class="divide-y dark:divide-slate-700 max-h-[400px] overflow-y-auto">
-
-                        <!-- STUDENT ROW -->
-                        <div class="grid grid-cols-12 items-center px-4 py-3 attendance-row">
-
-                            <div class="col-span-2 text-sm text-gray-600 dark:text-gray-400">01</div>
-
-                            <div class="col-span-4 text-sm font-medium">
-                                Rahul Sharma
-                            </div>
-
-                            <div class="col-span-2 text-sm text-gray-500 dark:text-gray-400">
-                                A
+                            <div>
+                                <p class="text-sm font-semibold">Rahul Patil</p>
+                                <p class="text-xs text-gray-400">Roll 01 • Div A</p>
                             </div>
 
                             <div class="col-span-4 flex justify-end gap-2">
                                 <button onclick="markPresent(this)" class="px-3 py-1 text-xs rounded-lg 
                         bg-gray-100 dark:bg-slate-700 hover:scale-105 transition">
-                                    Present
+                                    P
                                 </button>
 
                                 <button onclick="markAbsent(this)" class="px-3 py-1 text-xs rounded-lg 
                         bg-gray-100 dark:bg-slate-700 hover:scale-105 transition">
-                                    Absent
+                                    A
                                 </button>
                             </div>
+
+                        </div>
+
+                        <!-- Repeat -->
+                        <div class="p-3 flex justify-between items-center gap-3 attendance-row">
+
+                            <div>
+                                <p class="text-sm font-semibold">Aditya Patil</p>
+                                <p class="text-xs text-gray-400">Roll 02 • Div A</p>
+                            </div>
+
+                            <div class="col-span-4 flex justify-end gap-2">
+                                <button onclick="markPresent(this)" class="px-3 py-1 text-xs rounded-lg 
+                        bg-gray-100 dark:bg-slate-700 hover:scale-105 transition">
+                                    P
+                                </button>
+
+                                <button onclick="markAbsent(this)" class="px-3 py-1 text-xs rounded-lg 
+                        bg-gray-100 dark:bg-slate-700 hover:scale-105 transition">
+                                    A
+                                </button>
+                            </div>
+
                         </div>
 
                     </div>
-
                 </div>
+
 
                 <!-- SAVE BUTTON -->
                 <div class="flex justify-end">
@@ -997,6 +1005,7 @@
 
             </section>
             <!-- ============================= ATTENDANCE SECTION END ============================= -->
+
             <!-- ============================= ASSIGNMENTS START ============================= -->
             <section class="section p-4 sm:p-6 space-y-6 hidden" id="assignmentsSection">
 
@@ -1180,6 +1189,7 @@
 
                 </div>
             </div>
+
             <!--  CREATE ASSIGNMENT MODAL -->
             <div id="assignmentModal"
                 class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm flex items-end sm:items-center justify-center z-50 p-2 sm:p-4">
@@ -1319,27 +1329,11 @@
 
             <!-- ============================= EXAM + RESULT SYSTEM ============================= -->
             <section id="examsSection" class="section hidden p-4 sm:p-6 space-y-6 dark:bg-slate-900 dark:text-gray-100">
-
                 <!-- HEADER -->
-                <div class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 rounded-2xl p-6 text-white 
-    flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-
-                    <div>
-                        <h2 class="text-xl font-semibold">Result & Marks</h2>
-                        <p class="text-sm opacity-90">Manage marks and view final report cards</p>
-                    </div>
-
-                    <div class="flex gap-2 flex-wrap">
-                        <button onclick="submitMarks()"
-                            class="bg-white text-purple-600 px-4 py-2 rounded-xl text-sm font-medium">
-                            Submit
-                        </button>
-
-                        <button onclick="openReportCard()" class="bg-black/20 px-4 py-2 rounded-xl text-sm">
-                            View Result
-                        </button>
-                    </div>
-
+                <div
+                    class="rounded-3xl p-5 text-white bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 shadow-lg">
+                    <h2 class="text-xl font-semibold tracking-wide">Exam Marks</h2>
+                    <p class="text-xs opacity-90">Manage student results efficiently</p>
                 </div>
 
                 <!-- FILTER -->
@@ -1371,56 +1365,66 @@
 
                 </div>
 
-                <!-- MARK ENTRY TABLE -->
-                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm overflow-auto">
+                <!-- STUDENT LIST -->
+                <div
+                    class="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-3xl shadow-lg divide-y border border-white/40">
 
-                    <!-- HEADER -->
+                    <!-- ROW -->
                     <div
-                        class="grid grid-cols-12 text-xs bg-gray-50 dark:bg-slate-700 px-4 py-2 text-gray-500 dark:text-gray-300">
-                        <div class="col-span-1">Roll</div>
-                        <div class="col-span-3">Student</div>
-                        <div class="col-span-1">Int</div>
-                        <div class="col-span-1">Ext</div>
-                        <div class="col-span-1">Oral</div>
-                        <div class="col-span-1">Prac</div>
-                        <div class="col-span-1">Total</div>
-                        <div class="col-span-1">%</div>
-                        <div class="col-span-1">Grade</div>
-                        <div class="col-span-2">Status</div>
-                    </div>
+                        class="student-row p-4 flex justify-between items-center dark:hover:bg-slate-700/40 transition">
 
-                    <!-- STUDENT -->
-                    <div class="grid grid-cols-12 items-center px-4 py-3 border-t dark:border-slate-700 mark-row">
-
-                        <div class="col-span-1">01</div>
-
-                        <div class="col-span-3 flex items-center gap-2">
-                            <img src="https://i.pravatar.cc/30" class="w-8 h-8 rounded-full">
-                            <span class="text-sm font-medium">Rahul Sharma</span>
+                        <div>
+                            <p class="student-name text-sm font-semibold">Aditya Patil</p>
+                            <p class="text-xs text-gray-400">Roll 01 • 10-A</p>
                         </div>
 
-                        <input type="number" class="mark-input col-span-1 border rounded px-2 py-1 text-sm 
-                bg-white dark:bg-slate-700 dark:border-slate-600">
+                        <div class="flex items-center gap-2 sm:gap-3">
 
-                        <input type="number" class="mark-input col-span-1 border rounded px-2 py-1 text-sm 
-                bg-white dark:bg-slate-700 dark:border-slate-600">
-
-                        <input type="number" class="mark-input col-span-1 border rounded px-2 py-1 text-sm 
-                bg-white dark:bg-slate-700 dark:border-slate-600">
-
-                        <input type="number" class="mark-input col-span-1 border rounded px-2 py-1 text-sm 
-                bg-white dark:bg-slate-700 dark:border-slate-600">
-
-                        <div class="col-span-1 total font-semibold text-indigo-600">0</div>
-                        <div class="col-span-1 percent text-sm">0%</div>
-                        <div class="col-span-1 grade text-sm font-medium">-</div>
-
-                        <!-- FIXED DIV + DARK MODE -->
-                        <div class="col-span-2">
-                            <span
-                                class="status text-xs bg-yellow-100 text-yellow-600 dark:bg-yellow-500/20 dark:text-yellow-300 px-2 py-1 rounded-full">
+                            <!-- STATUS -->
+                            <span class="status-badge-pro pending">
                                 Draft
                             </span>
+
+                            <!-- ADD MARKS -->
+                            <button onclick="openMarksModal(1)" class="btn-primary-pro">
+                                Add Marks
+                            </button>
+
+                            <!-- VIEW -->
+                            <button onclick="openReportCard(this)" class="btn-ghost-pro">
+                                View
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <!-- ROW -->
+                    <div
+                        class="student-row p-4 flex justify-between items-center  dark:hover:bg-slate-700/40 transition">
+
+                        <div>
+                            <p class="student-name text-sm font-semibold">Digvijay Patil</p>
+                            <p class="text-xs text-gray-400">Roll 02 • 10-A</p>
+                        </div>
+
+                        <div class="flex items-center gap-2 sm:gap-3">
+
+                            <!-- STATUS -->
+                            <span class="status-badge-pro pending">
+                                Pending
+                            </span>
+
+                            <!-- ADD MARKS -->
+                            <button onclick="openMarksModal(1)" class="btn-primary-pro">
+                                Add Marks
+                            </button>
+
+                            <!-- VIEW -->
+                            <button onclick="openReportCard(this)" class="btn-ghost-pro">
+                                View
+                            </button>
+
                         </div>
 
                     </div>
@@ -1428,6 +1432,90 @@
                 </div>
 
             </section>
+
+            <div id="marksModal"
+                class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+
+                <div class="w-full max-w-md bg-white dark:bg-slate-900 
+        rounded-3xl shadow-2xl p-5 space-y-5 animate-fadeIn">
+
+                    <!-- HEADER -->
+                    <div class="flex justify-between items-start">
+
+                        <div>
+                            <h2 id="studentName" class="text-base font-semibold">Aditya Patil</h2>
+                        </div>
+
+                        <button onclick="closeMarksModal()" class="text-gray-400 hover:text-red-500 text-lg">
+                            ✕
+                        </button>
+                    </div>
+
+                    <!-- NAV + CONTENT -->
+                    <div class="flex items-center justify-between gap-2">
+
+                        <!-- LEFT -->
+                        <button onclick="prevStudent()" class="nav-arrow-small">
+                            ←
+                        </button>
+
+                        <!-- CENTER -->
+                        <div class="flex-1 space-y-4">
+
+                            <!-- MARK INPUTS -->
+                            <div class="grid grid-cols-2 gap-3">
+
+                                <div class="mark-box-small">
+                                    <label>INT</label>
+                                    <input type="number" max="20" class="mark-input-modal">
+                                </div>
+
+                                <div class="mark-box-small">
+                                    <label>EXT</label>
+                                    <input type="number" max="50" class="mark-input-modal">
+                                </div>
+
+                                <div class="mark-box-small">
+                                    <label>ORAL</label>
+                                    <input type="number" max="10" class="mark-input-modal">
+                                </div>
+
+                                <div class="mark-box-small">
+                                    <label>PRAC</label>
+                                    <input type="number" max="20" class="mark-input-modal">
+                                </div>
+
+                            </div>
+
+                            <!-- RESULT -->
+                            <div class="bg-gradient-to-r from-indigo-50 to-purple-50 
+                    dark:from-slate-800 dark:to-slate-700 
+                    rounded-xl p-3 text-center text-sm">
+
+                                <p>Total: <span id="modalTotal">0</span></p>
+                                <p>%: <span id="modalPercent">0%</span></p>
+                                <p>Grade: <span id="modalGrade" class="font-bold text-indigo-600">-</span></p>
+
+                            </div>
+
+                        </div>
+
+                        <!-- RIGHT -->
+                        <button onclick="nextStudent()" class="nav-arrow-small">
+                            →
+                        </button>
+
+                    </div>
+
+                    <!-- SAVE -->
+                    <button onclick="saveMarks()" class="w-full bg-gradient-to-r from-emerald-500 to-green-600 
+            text-white py-2.5 rounded-xl text-sm font-medium shadow-md 
+            hover:scale-[1.02] active:scale-95 transition">
+                        Save Marks
+                    </button>
+
+                </div>
+            </div>
 
             <!--  REPORT CARD MODAL  -->
             <div id="reportCardModal"
@@ -1826,7 +1914,7 @@
             </div>
             <!-- ============================= NOTICE SECTION END ============================= -->
 
-            <!-- ============================= LEAVE REQUEST SECTION ============================= -->
+            <!-- =============================STUDENT LEAVE REQUEST SECTION ============================= -->
             <section class="section p-4 sm:p-6 space-y-6 hidden dark:bg-slate-900 dark:text-gray-100" id="leaveSection">
 
                 <!-- HEADER -->
@@ -2103,6 +2191,26 @@
                         <div class="space-y-2 text-sm text-gray-600 dark:text-gray-300">
                             <p>Mumbai, Maharashtra</p>
                             <p>Pincode: 400001</p>
+                        </div>
+                    </div>
+
+                    <!-- CARD -->
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-md hover:shadow-xl transition">
+                        <h4 class="font-semibold mb-3">🩺 Health & Emergency</h4>
+                        <div class="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+                            <p>Blood Group: <span class="font-medium text-red-600 dark:text-red-400">B+</span></p>
+                            <p>Medical Condition: <span class="font-medium text-gray-900 dark:text-white">None</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- CARD -->
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-md hover:shadow-xl transition">
+                        <h4 class="font-semibold mb-3">Emergency Contact</h4>
+                        <div class="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+                            <p>Name: <span class="font-medium text-gray-900 dark:text-white">Suresh Sharma</span></p>
+                            <p>Relation: <span class="font-medium text-gray-900 dark:text-white">Brother</span></p>
+                            <p>Phone: <span class="font-medium text-gray-900 dark:text-white">9876501234</span></p>
                         </div>
                     </div>
 

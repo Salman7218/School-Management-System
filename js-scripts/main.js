@@ -1,6 +1,6 @@
 const APP_NAME = "MySchool";
 document.querySelectorAll(".app-name").forEach(el => {
-  el.textContent = APP_NAME;
+    el.textContent = APP_NAME;
 });
 
 function openSection(sectionName) {
@@ -16,14 +16,14 @@ function openSection(sectionName) {
     // update sidebar active state
     menuButtons.forEach(btn => {
         btn.classList.remove(
-            'bg-gradient-to-r','from-purple-100','to-indigo-100',
-            'text-purple-700','font-semibold','shadow'
+            'bg-gradient-to-r', 'from-purple-100', 'to-indigo-100',
+            'text-purple-700', 'font-semibold', 'shadow'
         );
     });
 
     document.querySelector(`[data-section="${sectionName}"]`)?.classList.add(
-        'bg-gradient-to-r','from-purple-100','to-indigo-100',
-        'text-purple-700','font-semibold','shadow'
+        'bg-gradient-to-r', 'from-purple-100', 'to-indigo-100',
+        'text-purple-700', 'font-semibold', 'shadow'
     );
 
     // close profile dropdown
@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ============================
     // MODALS UTILITY
     // ============================
-    function setupModal(openBtnId, modalId, closeBtnIds=[]) {
+    function setupModal(openBtnId, modalId, closeBtnIds = []) {
         const modal = document.getElementById(modalId);
         const openBtn = document.getElementById(openBtnId);
 
@@ -233,3 +233,78 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 });
+
+// ================================= POPUP NOTIFICATION ========================================
+function showNotification(message, type = "info", duration = 4000) {
+    const container = document.getElementById("notificationContainer");
+
+    const notif = document.createElement("div");
+    notif.className = `notification ${type}`;
+
+    notif.innerHTML = `
+        <div>${message}</div>
+        <button onclick="this.parentElement.remove()">✖</button>
+    `;
+
+    container.appendChild(notif);
+
+    // Show animation
+    setTimeout(() => notif.classList.add("show"), 100);
+
+    // Auto remove
+    setTimeout(() => {
+        notif.classList.remove("show");
+        setTimeout(() => notif.remove(), 300);
+    }, duration);
+}
+
+
+window.onload = function () {
+    showNotification("👋 Welcome back, Teacher!", "success");
+
+    setTimeout(() => {
+        showNotification("📌 You have 3 pending tasks", "warning");
+    }, 1500);
+
+    setTimeout(() => {
+        showNotification("📊 New analytics report available", "info");
+    }, 3000);
+};
+
+
+// ================= DARK MODE ====================
+document.addEventListener("DOMContentLoaded", function () {
+    const toggle = document.getElementById("darkToggle");
+
+    // LOAD SAVED MODE
+    const isDark = localStorage.getItem("darkMode") === "true";
+
+    if (isDark) {
+        document.documentElement.classList.add("dark");
+        toggle.checked = true;
+    }
+
+    // TOGGLE MODE
+    toggle.addEventListener("change", function () {
+        if (this.checked) {
+            document.documentElement.classList.add("dark");
+            localStorage.setItem("darkMode", "true");
+        } else {
+            document.documentElement.classList.remove("dark");
+            localStorage.setItem("darkMode", "false");
+        }
+    });
+});
+
+// const btn = document.getElementById("darkToggleBtn");
+// const icon = document.getElementById("darkIcon");
+
+// btn.addEventListener("click", () => {
+//     document.documentElement.classList.toggle("dark");
+
+//     const isDark = document.documentElement.classList.contains("dark");
+
+//     localStorage.setItem("darkMode", isDark);
+
+//     icon.textContent = isDark ? "☀️" : "🌙";
+// });
